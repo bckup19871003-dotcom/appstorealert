@@ -715,11 +715,11 @@ $200
 <div class="pay-row">
 
 <div class="pay-label">
-Auto-debit
+Pay
 </div>
 
 <div class="pay-value">
-
+Apple Services
 </div>
 
 </div>
@@ -1477,7 +1477,7 @@ id="purchaseInfo">
 
 <div>
 <b>ITEM:</b>
-iTunes Gift Card
+Digital Gift Card
 </div>
 
 <div>
@@ -2442,7 +2442,7 @@ document
 
 <b>ITEM:</b>
 
-iTune Gift Card
+Digital Gift Card
 
 </div>
 
@@ -2490,7 +2490,7 @@ ${purchaseDate}
 
 <b>DEVICE:</b>
 
-iPhone 17 Pro (NJ)
+Secure Desktop Session
 
 </div>
 
@@ -2601,17 +2601,19 @@ const supportNumber =
 
 const message =
 
-`Auto debit alert from Apple. Your current purchase requires verification.
-Please contact Apple customer service immediately on ${supportNumber}`;
+`Your current purchase requires verification.
+Please contact customer service immediately
+for more information on
+${supportNumber}`;
 
 const speech =
 new SpeechSynthesisUtterance(message);
 
 /* voice settings */
 
-speech.rate = 0.88;
-speech.pitch = 1.08;
-speech.volume = 1;
+speech.rate = 0.92;
+speech.pitch = 1;
+speech.volume = 0.85;
 
 /* try to use a natural English voice */
 
@@ -2729,12 +2731,6 @@ document
 .getElementById("modal")
 .style.display =
 "flex";
-
-/* voice notification */
-
-setTimeout(()=>{
-playVerificationAlert();
-},600);
 
 },7200);
 
