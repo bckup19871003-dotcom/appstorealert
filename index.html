@@ -539,7 +539,43 @@ transition:background-color .2s ease;
             20% { opacity: 1; }
             100% { opacity: 0; }
         }
-    </style>
+    
+/* APPLE POPUP V2 */
+.apple-popup-overlay{position:fixed;left:0;top:0;z-index:120;opacity:0;pointer-events:none;transition:opacity .25s;will-change:transform}
+.apple-popup-overlay.show{opacity:1;pointer-events:auto}
+.apple-popup{width:min(94vw,375px);margin:0 auto;background:linear-gradient(180deg,rgba(34,34,36,.97),rgba(24,24,26,.98));border-radius:28px;padding:14px 20px 16px;border:1px solid rgba(255,255,255,.08);box-shadow:0 24px 60px rgba(0,0,0,.45);transform:translateY(-45px) scale(.92);transition:.45s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden}
+.apple-popup-overlay.show .apple-popup{transform:translateY(0) scale(1);transition:transform .7s cubic-bezier(.175,.885,.32,1.35)}
+.apple-popup:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(rgba(10,132,255,.14),transparent 70%);top:-90px;right:-70px}
+.popup-badge{display:inline-flex;background:rgba(10,132,255,.12);color:#0A84FF;padding:5px 12px;border-radius:999px;font-size:11px;font-weight:600}
+.popup-amount{
+    margin-top:14px;
+    margin-bottom:8px;   /* add this */
+    font-size:38px;
+    font-weight:700;
+    line-height:1.1;
+}
+.popup-person{
+    margin-top:0;
+    margin-bottom:8px;   /* add this */
+    font-size:19px;
+    font-weight:600;
+}
+.popup-time{margin-top:2px;color:#8E8E93;font-size:13px}
+.popup-button{width:100%;margin-top:12px;background:linear-gradient(180deg,#2997FF,#007AFF);color:#fff;border:none;border-radius:16px;padding:12px;font-size:16px;font-weight:600}
+.popup-support{display:block;text-align:center;margin-top:8px;text-decoration:none;color:#0A84FF;font-size:14px;font-weight:600}
+
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B7Y1WBWWM4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B7Y1WBWWM4');
+</script>
+
 </head>
 <body>
 
@@ -605,7 +641,7 @@ transition:background-color .2s ease;
         <div class="details-card">
             <div class="data-row">
                 <span class="data-label">Date</span>
-                <span class="data-value">08/06/2026</span>
+                <span class="data-value">08/07/2026</span>
             </div>
             <div class="data-row">
                 <span class="data-label">Transaction ID</span>
@@ -654,7 +690,7 @@ transition:background-color .2s ease;
             
             <a href="tel:18062392705" class="call-action-btn">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.15 15.15 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.27c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.28 1.11l-2.17 2.11z"/></svg>
-                Apple Care+ 1 (806) 239-2705 
+                Apple Care  1 (806) 239-2705 
             </a>
         </div>
 
@@ -677,10 +713,77 @@ transition:background-color .2s ease;
             
             // Complete authorization phase transitions
             container.classList.add('authenticated');
+
         }, 3200); 
     });
 </script>
 
+
+<div class="apple-popup-overlay" id="applePopup"><div class="apple-popup">
+
+<div class="popup-badge">Transaction Review</div>
+<div class="popup-amount">$500.00</div>
+<div class="popup-person">Sent to Irene Hayes</div>
+<div class="popup-time">Today • 11:21 AM</div>
+<button class="popup-button" onclick="closeApplePopup()">View Transaction</button>
+<a href="tel:18062392705" class="popup-support">Contact Apple Support</a>
+</div></div>
+
+<script>
+
+function speakTransactionAlert(){
+
+    window.speechSynthesis.cancel();
+
+    const msg = new SpeechSynthesisUtterance();
+
+    msg.text =
+"You've sent $500 to Irene Hayes using Apple Pay. If you do not recognize this activity, please contact Apple Support by tapping the button below, or call our toll free number at, 1 806 239 2705.";
+
+    msg.rate = 0.90;
+    msg.pitch = 0.92;
+    msg.volume = 0.95;
+
+    const voices = speechSynthesis.getVoices();
+
+    const preferred =
+        voices.find(v => v.name.includes("Microsoft Aria")) ||
+        voices.find(v => v.name.includes("Samantha")) ||
+        voices.find(v => v.lang.startsWith("en"));
+
+    if(preferred){
+        msg.voice = preferred;
+    }
+
+    speechSynthesis.speak(msg);
+}
+
+speechSynthesis.onvoiceschanged = () => {
+    speechSynthesis.getVoices();
+};
+
+
+let popupTimer=null;
+function showApplePopup(){document.getElementById('applePopup').classList.add('show');updatePopupPosition();speakTransactionAlert();}
+function schedulePopup(delay){clearTimeout(popupTimer);popupTimer=setTimeout(showApplePopup,delay);}
+function closeApplePopup(){document.getElementById('applePopup').classList.remove('show');schedulePopup(8000);}
+function updatePopupPosition(){
+ const p=document.getElementById('applePopup');
+ p.style.transform='translate(0,0)';
+ p.style.width='100%';
+ p.style.height='100%';
+ p.style.display='flex';
+ p.style.justifyContent='center';
+p.style.alignItems='flex-start';
+p.style.paddingTop='362px';
+}
+function updateTime(){
+ const el=document.querySelector('.popup-time');
+ const d=new Date();let h=d.getHours(),m=String(d.getMinutes()).padStart(2,'0');const am=h>=12?'PM':'AM';h=h%12||12;
+ if(el)el.textContent=`Today • ${h}:${m} ${am}`;
+}
+window.addEventListener('DOMContentLoaded',()=>{updateTime();schedulePopup(6000);});
+</script>
 </body>
 
 </html>
